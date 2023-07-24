@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from '../features/Navbar/Navbar'
-import ProductList from '../features/Product-list/components/ProductList';
+import ProductDetails from '../features/Product-list/components/ProductDetails';
 
 const Home = () => {
   return (
     <div>
         <Navbar>
-            <ProductList></ProductList>
+            <ProductDetails></ProductDetails>
         </Navbar>
     </div>
   )
