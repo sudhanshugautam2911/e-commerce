@@ -34,21 +34,22 @@ const products = [
   // More products...
 ];
 
+// My latest code
 export default function Cart() {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
+  // const count = useSelector(selectCount);
+  // const dispatch = useDispatch();
 
   // cart open/close
   const [open, setOpen] = useState(true);
 
   return (
     <>
-    {/* max-w-7xl , bg-white */}
+      {/* max-w-7xl , bg-white */}
       <div className="mx-auto mt-12 bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">
         <h1 className="text-4xl my-10 flex justify-center font-bold  text-gray-900">
           Shopping Cart
         </h1>
-        <div className="border-t border-gray-200 px-4 py-6 sm:px-6 " >
+        <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
           <div className="flow-root ">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {products.map((product) => (
@@ -77,7 +78,7 @@ export default function Cart() {
                       <div className="text-gray-500">
                         <label
                           htmlFor="Quantity"
-                          className="inline leading-6 text-gray-500"
+                          className="inline leading-6 mr-1 text-gray-500"
                         >
                           Qty
                         </label>
@@ -136,7 +137,7 @@ export default function Cart() {
             </p>
           </div>
         </div>
-      </div>  
+      </div>
     </>
   );
 }
