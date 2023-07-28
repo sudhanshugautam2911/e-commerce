@@ -18,8 +18,8 @@ export const fetchAllProductAsync = createAsyncThunk(
 // fetch by filter like by smartphone , laptop or a brand.
 export const fetchAllProductByFilterAsync = createAsyncThunk(
   'product/fetchAllProductByFilter',
-  async (filter) => {
-    const response = await fetchAllProductByFilter(filter);
+  async ({filter, sort}) => {
+    const response = await fetchAllProductByFilter(filter, sort);
     return response.data;
   }
 );

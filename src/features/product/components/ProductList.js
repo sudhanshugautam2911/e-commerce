@@ -211,28 +211,44 @@ export default function ProductList() {
   const products = useSelector(selectAllProducts);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
 
   // select a specific filter like smartphone,
   const handleFilter = (e, section, option) => {
-    console.log(section.id, option.value);
+    // TODO : on server we will support selecting multiple categories
+    // console.log(section.id, option.value);
 
-    const newFilter = { ...filter, [section.id]: option.value };
+    const newFilter = { ...filter };
+    
+    if (e.target.checked) {
+      // I am not sure how this logic working
+        if (newFilter[section.id]) {
+            newFilter[section.id].push(option.value);
+
+        } else {
+          newFilter[section.id] = [option.value];
+        }
+
+    } else {
+      const index = newFilter[section.id].findIndex(el=>el === option.value);
+      newFilter[section.id].splice(index,1);  
+    } 
+
     setFilter(newFilter);
-    dispatch(fetchAllProductByFilterAsync(newFilter));
-    // console.log("New filters dispatching done");
+    // dispatch(fetchAllProductByFilterAsync(newFilter));
   };
 
   // sort products
   const handleSort = (e, option) => {
     // option.current = true;
-    const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-    setFilter(newFilter);
-    dispatch(fetchAllProductByFilterAsync(newFilter));
+    const sort = { ...filter, _sort: option.sort, _order: option.order };
+    setSort(sort);
+    // dispatch(fetchAllProductByFilterAsync({sort}));
   };
 
   useEffect(() => {
-    dispatch(fetchAllProductAsync());
-  }, [dispatch]);
+    dispatch(fetchAllProductByFilterAsync({ filter, sort }));
+  }, [dispatch, filter]);
 
   return (
     <div>
