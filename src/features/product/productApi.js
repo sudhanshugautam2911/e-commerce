@@ -9,13 +9,15 @@ export function fetchAllProduct() {
   });
 }
 
-export function fetchAllProductByFilter(filter, sort) {
+export function fetchAllProductByFilter(filter, sort, pagination) {
   let queryString = "";
 
   // TODO: on server we will supoort selecting multiple values
   for (let key in filter) {
     // filter = {"category": ["smartphone", "laptops"]};
     // sort = {_sort:"price", _order="desc"}
+    // pagination = {_page:1, _limit=10}  // _page=1&_limit=10
+
     // it will be appended like that, category=smartphones
     // ${key} is the current key and ${filter[key]} is the value of current key
     const catergoryValues = filter[key];
@@ -30,6 +32,10 @@ export function fetchAllProductByFilter(filter, sort) {
     queryString += `${key}=${sort[key]}&`;
 
   }
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+
+  }
 
   return new Promise(async (resolve) => {
     // TODO: we will not hard code server url, we'll chance it later
@@ -39,6 +45,8 @@ export function fetchAllProductByFilter(filter, sort) {
       "http://localhost:8080/products?" + queryString
     );
     const data = await response.json();
-    resolve({ data });
+    // it is a feature of api we are using
+    const totalItems = await response.headers.get('X-Total-Count')
+    resolve({ data:{products:data, totalItems:+totalItems} });
   });
 }
