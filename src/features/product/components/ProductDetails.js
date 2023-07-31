@@ -7,6 +7,8 @@ import {
   selectAllProductById,
 } from "../productSlice";
 import { useParams } from "react-router-dom";
+import { addToCartAsync } from "../../Cart/cartSlice";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 // TODO : In server we will add colors, sizes and highlight to each product
 const colors = [
@@ -87,10 +89,15 @@ export default function ProductDetails() {
   const product = useSelector(selectAllProductById);
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
-
   const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
   // react routing feature
   const params = useParams();
+
+  const handleCart = (e) => {
+    e.preventDefault();
+    dispatch(addToCartAsync({...product, quantity:1, user:user.id}))
+  } 
 
   useEffect(() => {
     dispatch(fetchAllProductByIdAsync(params.id));
@@ -340,6 +347,7 @@ export default function ProductDetails() {
                 </div>
 
                 <button
+                  onClick={handleCart}
                   type="submit"
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
