@@ -11,6 +11,18 @@ export function createUser(userData) {
     resolve({ data });
   });
 }
+export function updateUser(update) {
+  return new Promise(async (resolve) => {
+    // updating existing user details - adding more details like address name and all
+    const response = await fetch("http://localhost:8080/users/" + update.id, {
+      method: "PATCH",
+      body: JSON.stringify(update),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
 
 export function checkUser(loginInfo) {
   return new Promise(async (resolve, reject) => {

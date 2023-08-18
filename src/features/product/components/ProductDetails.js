@@ -94,9 +94,14 @@ export default function ProductDetails() {
   // react routing feature
   const params = useParams();
 
+  const newItem = {...product, quantity:1, user:user.id};
+  delete newItem['id'];
+  // backend will automatically an Id 
+  // console.log(newItem);
+
   const handleCart = (e) => {
     e.preventDefault();
-    dispatch(addToCartAsync({...product, quantity:1, user:user.id}))
+    dispatch(addToCartAsync(newItem));
   } 
 
   useEffect(() => {

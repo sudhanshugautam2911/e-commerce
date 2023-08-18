@@ -10,6 +10,7 @@ export function addToCart(item) {
     resolve({ data });
   });
 }
+
 export function updateCart(update) {
   return new Promise(async (resolve) => {
     // kind of uploading data on our api
@@ -22,6 +23,7 @@ export function updateCart(update) {
     resolve({ data });
   });
 }
+
 export function deleteCartItem(itemId) {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/cart/" + itemId, {
@@ -40,5 +42,18 @@ export function fetchItemsByUserId(userId) {
     const response = await fetch("http://localhost:8080/cart?user=" + userId);
     const data = await response.json();
     resolve({ data });
+  });
+}
+
+export function resetCart(userId) {
+  return new Promise(async (resolve) => {
+
+    const response = await fetchItemsByUserId(userId);
+    const items = response.data;
+
+    for (let item of items) {
+      await deleteCartItem(item.id)
+    }
+    resolve({ status: 'success' });
   });
 }
