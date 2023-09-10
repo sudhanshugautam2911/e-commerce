@@ -1053,22 +1053,22 @@
       "password": "123Abcde",
       "addresses": [
         {
-          "name": "Sudhanshu Gautam",
-          "email": "gautamsudhanshu2911@gmail.com",
-          "phone": "+917078040528",
-          "street": "1590, JANAKPURI",
-          "city": "Muzaffarnagar",
-          "state": "Uttar Pradesh",
+          "name": "Puneet superstar",
+          "email": "puneet@gmail.com",
+          "phone": "9998889991",
+          "street": "simrit tower",
+          "city": "mzn",
+          "state": "up",
           "pinCode": "251001"
         },
         {
-          "name": "Puneet superstar",
-          "email": "puneet@gmail.co",
-          "phone": "9999999999",
-          "street": "144, nala road",
-          "city": "Mumbai",
-          "state": "maharashtra",
-          "pinCode": "112001"
+          "name": "Sudhanshu Gautam",
+          "email": "gautamsudhanshu2911@gmail.com",
+          "phone": "+917078040528",
+          "street": "1590, Janakpuri, muzaffarnagar, uttar Pradesh",
+          "city": "Muzaffarnagar, Muzaffarnagar, Uttar Pradesh",
+          "state": "Uttar Pradesh",
+          "pinCode": "251001"
         }
       ],
       "id": 2
@@ -1137,7 +1137,7 @@
         "https://i.dummyjson.com/data/products/17/3.jpg",
         "https://i.dummyjson.com/data/products/17/thumbnail.jpg"
       ],
-      "quantity": 1,
+      "quantity": 2,
       "user": 2,
       "id": 3
     },

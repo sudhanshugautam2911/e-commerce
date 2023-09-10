@@ -85,7 +85,7 @@ export default function Cart() {
                         <p className="ml-4">${item.price}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
-                        {item.color}
+                        {item.brand}
                       </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">

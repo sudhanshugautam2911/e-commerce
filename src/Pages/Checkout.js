@@ -93,7 +93,7 @@ const Checkout = () => {
             <form
               noValidate
               onSubmit={handleSubmit((data) => {
-                // it is a format - send user, field which is addresses then field ke ander user.addresses and addresess data se ayega - something like that
+                // it is a format - send shallow copy of user, field which is addresses then field ke ander user.addresses and addresess data se ayega - something like that
                 // const xd = {...user,addresses:[...user.addresses,data]}
                 disptach(
                   updateUserAsync({

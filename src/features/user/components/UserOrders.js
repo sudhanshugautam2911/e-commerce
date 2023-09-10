@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser } from "../../auth/authSlice";
-import { fetchLoggedInUserOrdersAsync, selectUserOrder } from "../userSlice";
+import { fetchLoggedInUserOrdersAsync, selectUserInfo, selectUserOrder } from "../userSlice";
 
-export default function Counter() {
+export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Counter() {
                           <p className="ml-4">${item.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {item.color}
+                          {item.brand}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">
