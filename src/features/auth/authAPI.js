@@ -31,3 +31,12 @@ export function checkUser(loginInfo) {
     }
   });
 }
+
+
+export function signOut(userID) {
+  return new Promise(async (resolve) => {
+    
+    // TODO: On server we will remove user section info
+    resolve({ data: 'success' });
+  });
+}

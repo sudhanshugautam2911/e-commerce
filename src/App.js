@@ -24,9 +24,8 @@ import OrderSuccessPage from "./Pages/OrderSuccessPage";
 import UserOrderPage from "./Pages/UserOrderPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
-
-
-
+import Logout from "./features/auth/components/Logout";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
 // TO RUN THIS APP
 // npm run start
@@ -71,29 +70,35 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
-        <PageNotFound></PageNotFound>
-    ),
+    element: <PageNotFound></PageNotFound>,
   },
   {
     path: "/order-success/:id",
-    element: (
-        <OrderSuccessPage></OrderSuccessPage>
-    ),
+    element: <OrderSuccessPage></OrderSuccessPage>,
   },
   {
     path: "/orders",
     element: (
-        // we are using component for testing but will make it page later
+      <Protected>
         <UserOrderPage></UserOrderPage>
+      </Protected>
     ),
   },
   {
     path: "/profile",
     element: (
-        // we are using component for testing but will make it page later
+      <Protected>
         <UserProfilePage></UserProfilePage>
+      </Protected>
     ),
+  },
+  {
+    path: "/logout",
+    element: <Logout></Logout>,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage></ForgotPasswordPage>,
   },
 ]);
 
