@@ -44,6 +44,7 @@ export default function Login() {
             className="space-y-6"
             onSubmit={handleSubmit((data) => {
               console.log(data);
+            //   TODO : implementation on backend with email
               
             })}
           >

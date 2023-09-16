@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Home from "./Pages/Home";
 import LoginPage from "./Pages/LoginPage";
@@ -26,15 +25,36 @@ import UserProfilePage from "./Pages/UserProfilePage";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import Logout from "./features/auth/components/Logout";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import AdminHome from "./Pages/AdminHome";
+import AdminProductDetailPage from "./Pages/AdminProductDetailPage";
+import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
+import AdminProductFormPage from "./Pages/AdminProductFormPage";
 
 // TO RUN THIS APP
 // npm run start
 // json-server --watch data.json --port 8080
 
+
+// Remember
+// The useParams() hook is a React Router hook that allows you to access the parameters of the current URL.( to know more go to productForm)
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+
+    element: (
+      <Protected>
+        <Home></Home>,
+      </Protected>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedAdmin>
+        <AdminHome></AdminHome>
+      </ProtectedAdmin>
+    ),
   },
   {
     path: "/login",
@@ -66,6 +86,30 @@ const router = createBrowserRouter([
       <Protected>
         <ProductDetailPage></ProductDetailPage>
       </Protected>
+    ),
+  },
+  {
+    path: "/admin/product-detail/:id",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductDetailPage></AdminProductDetailPage>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/product-form",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage></AdminProductFormPage>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/product-form/edit/:id",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage></AdminProductFormPage>
+      </ProtectedAdmin>
     ),
   },
   {

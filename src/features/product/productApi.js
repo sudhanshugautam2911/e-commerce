@@ -2,6 +2,7 @@ export function fetchAllProduct() {
   return new Promise(async (resolve) => {
     // TODO: we will not hard code server url, we'll chance it later
     // This temporary url is done with the help of json-server
+    
 
     const response = await fetch("http://localhost:8080/products");
     const data = await response.json();
@@ -10,17 +11,38 @@ export function fetchAllProduct() {
 }
 export function fetchAllProductById(id) {
   return new Promise(async (resolve) => {
-
     const response = await fetch("http://localhost:8080/products/" + id);
     const data = await response.json();
     resolve({ data });
-
+  });
+}
+export function createProduct(product) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("http://localhost:8080/products/", {
+      method: "POST",
+      body: JSON.stringify(product),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+export function updateProduct(update) {
+  return new Promise(async (resolve) => {
+    // kind of uploading data on our api
+    const response = await fetch("http://localhost:8080/products/" + update.id, {
+      method: "PATCH",
+      body: JSON.stringify(update),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
   });
 }
 
+
 export function fetchAllBrands() {
   return new Promise(async (resolve) => {
-
     const response = await fetch("http://localhost:8080/brands");
     const data = await response.json();
     resolve({ data });
@@ -28,14 +50,11 @@ export function fetchAllBrands() {
 }
 export function fetchAllCategory() {
   return new Promise(async (resolve) => {
-
     const response = await fetch("http://localhost:8080/category");
     const data = await response.json();
     resolve({ data });
   });
 }
-
-
 
 export function fetchAllProductByFilter(filter, sort, pagination) {
   let queryString = "";
@@ -45,6 +64,8 @@ export function fetchAllProductByFilter(filter, sort, pagination) {
     // filter = {"category": ["smartphone", "laptops"]};
     // sort = {_sort:"price", _order="desc"}
     // pagination = {_page:1, _limit=10}  // _page=1&_limit=10
+    // TODO: on server we will support multi values in filter
+    // TODO: on server we will filter deleted Products in case of non-admin
 
     // it will be appended like that, category=smartphones
     // ${key} is the current key and ${filter[key]} is the value of current key
@@ -58,11 +79,9 @@ export function fetchAllProductByFilter(filter, sort, pagination) {
 
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
-
   }
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
-
   }
 
   return new Promise(async (resolve) => {
@@ -74,7 +93,7 @@ export function fetchAllProductByFilter(filter, sort, pagination) {
     );
     const data = await response.json();
     // it is a feature of api we are using
-    const totalItems = await response.headers.get('X-Total-Count')
-    resolve({ data:{products:data, totalItems:+totalItems} });
+    const totalItems = await response.headers.get("X-Total-Count");
+    resolve({ data: { products: data, totalItems: +totalItems } });
   });
 }

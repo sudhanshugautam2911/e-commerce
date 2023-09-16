@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../features/Navbar/Navbar'
 import ProductDetails from '../features/product/components/ProductDetails';
 
-const Home = () => {
+const ProductDetailPage = () => {
   return (
     <div>
         <Navbar>
@@ -12,4 +12,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default ProductDetailPage
