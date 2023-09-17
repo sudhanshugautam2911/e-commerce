@@ -9,6 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../Cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
+import { discountPrice } from "../../../app/constants";
 
 // TODO : In server we will add colors, sizes and highlight to each product
 const colors = [
@@ -199,7 +200,7 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                ${product.price}
+                ${discountPrice(product)}
               </p>
 
               {/* Reviews */}

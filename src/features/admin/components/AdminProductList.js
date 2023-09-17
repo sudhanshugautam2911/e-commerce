@@ -28,7 +28,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../../../app/constants";
+import { ITEM_PER_PAGE, discountPrice } from "../../../app/constants";
 
 const sortOptions = [
   { name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -445,7 +445,7 @@ function ProductGrid({ products }) {
                       />
                     </div>
                     {product.deleted && (
-                      <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-black bg-opacity-50 rounded-md">
+                      <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-white bg-opacity-90 rounded-md">
                         <p className="text-sm text-red-500 font-bold">
                           Product Deleted
                         </p>
@@ -470,11 +470,7 @@ function ProductGrid({ products }) {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">
-                          $
-                          {Math.round(
-                            product.price *
-                              (1 - product.discountPercentage / 100)
-                          )}
+                          ${discountPrice(product)}
                         </p>
                         <p className="text-sm line-through  font-medium text-gray-400">
                           ${product.price}
