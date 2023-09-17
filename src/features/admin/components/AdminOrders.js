@@ -140,7 +140,7 @@ function AdminOrders() {
                                 src={item.thumbnail}
                               />
                             </div>
-                            <span>
+                            <span className="">
                               {item.title} - #{item.quantity} - $
                               {discountPrice(item)}
                             </span>
@@ -148,7 +148,7 @@ function AdminOrders() {
                         ))}
                       </td>
                       <td className="py-3 px-6 text-center">
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center text-sm font-medium">
                           ${order.totalAmount}
                         </div>
                       </td>
@@ -163,7 +163,7 @@ function AdminOrders() {
                           <div>{order.selectedAddresses.phone},</div>
                         </div>
                       </td>
-                      <td className="py-3 px-6 text-center">
+                      <td className="py-3 px-6 text-center text-sm font-medium">
                         {order.id === editableOderId ? (
                           <select onChange={(e) => handleUpdateOrder(e, order)}>
                             <option value="pending">Pending</option>

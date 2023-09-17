@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProductByIdAsync,
-  selectProductById,
-} from "../productSlice";
+import { fetchProductByIdAsync, selectProductById } from "../productSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../../Cart/cartSlice";
+import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountPrice } from "../../../app/constants";
 
@@ -23,7 +20,7 @@ const sizes = [
   { name: "S", inStock: true },
   { name: "M", inStock: true },
   { name: "L", inStock: true },
-  
+
   { name: "XL", inStock: true },
   { name: "2XL", inStock: true },
   { name: "3XL", inStock: true },
@@ -95,16 +92,26 @@ export default function ProductDetails() {
   const user = useSelector(selectLoggedInUser);
   // react routing feature
   const params = useParams();
+  const items = useSelector(selectItems);
 
-  const newItem = {...product, quantity:1, user:user.id};
-  delete newItem['id'];
-  // backend will automatically an Id 
-  // console.log(newItem);
+  // backend will automatically an Id
 
   const handleCart = (e) => {
     e.preventDefault();
-    dispatch(addToCartAsync(newItem));
-  } 
+    console.log("Product id is ", product.id);
+    if (items.findIndex(item => item.productId === product.id) < 0) {
+      const newItem = {
+        ...product,
+        productId: product.id,
+        quantity: 1,
+        user: user.id,
+      };
+      delete newItem["id"];
+      dispatch(addToCartAsync(newItem));
+    }else {
+      alert("Item Already Added")
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
@@ -402,7 +409,7 @@ export default function ProductDetails() {
             </div>
           </div>
         </div>
-      ) }
+      )}
     </div>
   );
 }
