@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createProduct, deleteCartItem, fetchAllBrands, fetchAllCategory, fetchAllProduct, fetchAllProductByFilter, fetchAllProductById, updateProduct } from './productApi';
+import { createProduct, deleteCartItem, fetchAllBrands, fetchAllCategory, fetchAllProductByFilter, fetchAllProducts, fetchProductById, updateProduct } from './productApi';
 
 const initialState = {
   products: [], 
@@ -10,18 +10,11 @@ const initialState = {
   selectedProduct: null
 };
 
-// fetch all the products 
-export const fetchAllProductAsync = createAsyncThunk(
-  'product/fetchAllProduct',
-  async () => {
-    const response = await fetchAllProduct();
-    return response.data;
-  }
-);
+
 export const fetchProductByIdAsync = createAsyncThunk(
-  'product/fetchAllProductById',
+  'product/fetchProductById',
   async (id) => {
-    const response = await fetchAllProductById(id);
+    const response = await fetchProductById(id);
     return response.data;
   }
 );
@@ -51,8 +44,8 @@ export const fetchAllCategoryAsync = createAsyncThunk(
 // fetch by filter like by smartphone , laptop or a brand.
 export const fetchAllProductByFilterAsync = createAsyncThunk(
   'product/fetchAllProductByFilter',
-  async ({filter, sort, pagination}) => {
-    const response = await fetchAllProductByFilter(filter, sort, pagination);
+  async ({filter, sort, pagination, admin}) => {
+    const response = await fetchAllProductByFilter(filter, sort, pagination, admin);
     // console.log(response.data);
     return response.data;
   }
@@ -78,13 +71,6 @@ export const productSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProductAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchAllProductAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.products = action.payload;  
-      })
       .addCase(fetchAllProductByFilterAsync.pending, (state) => {
         state.status = 'loading';
       })

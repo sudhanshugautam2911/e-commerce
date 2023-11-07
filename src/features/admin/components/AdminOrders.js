@@ -17,7 +17,7 @@ import Pagination from "../../common/Pagination";
 
 function AdminOrders() {
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState({_order:'asc'});
+  const [sort, setSort] = useState({ _order: "asc" });
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
   const totalOrders = useSelector(selectTotalOrders);
@@ -82,13 +82,13 @@ function AdminOrders() {
                         })
                       }
                     >
-                      Order#
-                      {" "}
-                      {sort._sort === 'id' && (sort._order == "asc" ? (
-                        <ArrowUpIcon className="w-4 h-4 inline "></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
-                      ))}
+                      Order#{" "}
+                      {sort._sort === "id" &&
+                        (sort._order == "asc" ? (
+                          <ArrowUpIcon className="w-4 h-4 inline "></ArrowUpIcon>
+                        ) : (
+                          <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
+                        ))}
                     </th>
                     <th className="py-3 px-6 text-left cursor-pointer select-none">
                       Items
@@ -102,14 +102,13 @@ function AdminOrders() {
                         })
                       }
                     >
-                      Total Amount
-                      {" "}
-                      {sort._sort === 'totalAmount' && (sort._order == "asc" ? (
-
-                        <ArrowUpIcon className="w-4 h-4 inline "></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
-                      ))}
+                      Total Amount{" "}
+                      {sort._sort === "totalAmount" &&
+                        (sort._order == "asc" ? (
+                          <ArrowUpIcon className="w-4 h-4 inline "></ArrowUpIcon>
+                        ) : (
+                          <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
+                        ))}
                     </th>
                     <th className="py-3 px-6 text-center cursor-pointer select-none">
                       Shipping Address
@@ -137,12 +136,23 @@ function AdminOrders() {
                             <div className="mr-2">
                               <img
                                 className="w-6 h-6 rounded-full"
-                                src={item.thumbnail}
+                                src={item.product.thumbnail}
+                                alt="Thumbnail"
                               />
                             </div>
                             <span className="">
-                              {item.title} - #{item.quantity} - $
-                              {discountPrice(item)}
+                              {item.product.title.length > 18 ? (
+                                <>
+                                  {item.product.title.slice(0, 10)}... - #
+                                  {item.quantity} - $
+                                  {discountPrice(item.product)}
+                                </>
+                              ) : (
+                                <>
+                                  {item.product.title} - #{item.quantity} - $
+                                  {discountPrice(item.product)}
+                                </>
+                              )}
                             </span>
                           </div>
                         ))}

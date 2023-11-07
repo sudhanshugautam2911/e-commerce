@@ -1,15 +1,4 @@
-export function fetchAllProduct() {
-  return new Promise(async (resolve) => {
-    // TODO: we will not hard code server url, we'll chance it later
-    // This temporary url is done with the help of json-server
-    
-
-    const response = await fetch("http://localhost:8080/products");
-    const data = await response.json();
-    resolve({ data });
-  });
-}
-export function fetchAllProductById(id) {
+export function fetchProductById(id) {
   return new Promise(async (resolve) => {
     const response = await fetch("http://localhost:8080/products/" + id);
     const data = await response.json();
@@ -50,13 +39,13 @@ export function fetchAllBrands() {
 }
 export function fetchAllCategory() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/category");
+    const response = await fetch("http://localhost:8080/categories");
     const data = await response.json();
     resolve({ data });
   });
 }
 
-export function fetchAllProductByFilter(filter, sort, pagination) {
+export function fetchAllProductByFilter(filter, sort, pagination, admin) {
   let queryString = "";
 
   // TODO: on server we will supoort selecting multiple values
@@ -82,6 +71,10 @@ export function fetchAllProductByFilter(filter, sort, pagination) {
   }
   for (let key in pagination) {
     queryString += `${key}=${pagination[key]}&`;
+  }
+
+  if(admin) {
+    queryString += `admin=true`;
   }
 
   return new Promise(async (resolve) => {

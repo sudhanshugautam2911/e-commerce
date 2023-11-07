@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { fetchLoggedInUserOrdersAsync, selectUserInfo, selectUserOrder } from "../userSlice";
 import { discountPrice } from "../../../app/constants";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
+  console.log("user order from selectUserOrder : ", orders)
 
   useEffect(() => {
-    console.log("user id is " + user.id);
-    dispatch(fetchLoggedInUserOrdersAsync(user.id));
+    console.log("user id is " + userInfo.id);
+    dispatch(fetchLoggedInUserOrdersAsync(userInfo.id));
   }, []);
 
   return (
@@ -19,7 +19,7 @@ export default function UserOrders() {
       <h1 className="text-4xl mt-5 mb-8 flex justify-center font-bold  text-gray-900">
         My Orders
       </h1>
-      {orders.map((order) => (
+      {orders && orders.map((order) => (
         // <div>
         <div className="bg-white px-4 py-3 my-6 rounded-md">
           <h1 className="text-3xl  flex font-bold  text-gray-900">
@@ -35,8 +35,8 @@ export default function UserOrders() {
                   <li key={item.id} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={item.thumbnail}
-                        alt={item.title}
+                        src={item.product.thumbnail}
+                        alt={item.product.title}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -45,12 +45,12 @@ export default function UserOrders() {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={item.href}>{item.title}</a>
+                            <a href={item.product.id}>{item.product.title}</a>
                           </h3>
-                          <p className="ml-4">${discountPrice(item)}</p>
+                          <p className="ml-4">${discountPrice(item.product)}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {item.brand}
+                          {item.product.brand}
                         </p>
                       </div>
                       <div className="flex flex-1 items-end justify-between text-sm">

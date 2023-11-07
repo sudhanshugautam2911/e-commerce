@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../Cart/cartSlice";
-import { selectLoggedInUser } from "../auth/authSlice";
+import { selectUserInfo } from "../user/userSlice";
 
 
 const navigation = [
@@ -29,7 +29,7 @@ function classNames(...classes) {
 
 function Navbar({ children }) {
   const items = useSelector(selectItems);
-  const user = useSelector(selectLoggedInUser);
+  const userInfo = useSelector(selectUserInfo);
 
   return (
     <>
@@ -52,7 +52,7 @@ function Navbar({ children }) {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => 
-                        item[user.role] ? (
+                        item[userInfo?.role] ? (
                           <Link
                             to={item.link}
                             key={item.name}
@@ -98,7 +98,7 @@ function Navbar({ children }) {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={user.imageUrl}
+                              src={userInfo?.imageUrl}
                               alt=""
                             />
                           </Menu.Button>
@@ -177,16 +177,16 @@ function Navbar({ children }) {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.imageUrl}
+                        src={userInfo?.imageUrl}
                         alt=""
                       />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
-                        {user.name}
+                        {userInfo?.name}
                       </div>
                       <div className="text-sm font-medium leading-none text-gray-400">
-                        {user.email}
+                        {userInfo?.email}
                       </div>
                     </div>
                     <Link to="/cart">

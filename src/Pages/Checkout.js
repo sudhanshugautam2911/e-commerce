@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
 import {
   deleteCartItemAsync,
@@ -10,13 +8,13 @@ import {
   updateCartAsync,
 } from "../features/Cart/cartSlice";
 import { useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/authSlice";
+// import {
+//   selectLoggedInUser,
+// } from "../features/auth/authSlice";
+import { updateUserAsync } from "../features/user/userSlice"
 import { createOrderAsync, selectCurrentOrder } from "../features/order/orderSlice";
 import { discountPrice } from "../app/constants";
-
+import { selectUserInfo } from '../features/user/userSlice';
 
 const Checkout = () => {
   const [open, setOpen] = useState(true);
@@ -30,14 +28,14 @@ const Checkout = () => {
 
   const disptach = useDispatch();
   const items = useSelector(selectItems);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
   console.log("currentOrder ", currentOrder)
 
 
   // calculate using reducer - new to me
   const totalAmount = items.reduce(
-    (amount, item) => discountPrice(item) * item.quantity + amount,
+    (amount, item) => discountPrice(item.product) * item.quantity + amount,
     0
   );
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
@@ -47,7 +45,7 @@ const Checkout = () => {
   
   const handleQuantity = (e, item) => {
     // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
-    disptach(updateCartAsync({ ...item, quantity: +e.target.value }));
+    disptach(updateCartAsync({ id: item.id, quantity: + e.target.value }));
   };
   const handleDelete = (e, id) => {
     disptach(deleteCartItemAsync(id));
@@ -66,7 +64,7 @@ const Checkout = () => {
         items,
         totalAmount,
         totalItems,
-        user,
+        user: user.id,
         paymentMethod,
         selectedAddresses,
         status: 'pending',  // order state -> delivered, recived etc 
@@ -381,8 +379,8 @@ const Checkout = () => {
                       <li key={item.id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={item.thumbnail}
-                            alt={item.title}
+                            src={item.product.thumbnail}
+                            alt={item.product.title}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -391,9 +389,9 @@ const Checkout = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.href}>{item.title}</a>
+                                <a href={item.product.id}>{item.product.title}</a>
                               </h3>
-                              <p className="ml-4">${discountPrice(item)}</p>
+                              <p className="ml-4">${discountPrice(item.product)}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {item.color}

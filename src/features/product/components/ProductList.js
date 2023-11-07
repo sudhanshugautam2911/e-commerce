@@ -293,7 +293,7 @@ function MobileFilter({
 
                 {/* Filters */}
                 <form className="mt-4 border-t border-gray-200">
-                  {/* mobile subc ategory */}
+                  {/* mobile subcategory */}
 
                   {filters.map((section) => (
                     <Disclosure
@@ -441,8 +441,8 @@ function ProductGrid({ products }) {
                     />
                   </div>
                   {product.stock <= 0 && (
-                    <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-white bg-opacity-90 rounded-md">
-                      <p className="text-sm text-red-500 font-bold">
+                    <div className="absolute top-0 left-0 mt-2 ml-2 p-2 bg-white bg-opacity-90 rounded-md">
+                      <p className="text-xs text-red-500 font-bold">
                         Out of Stock
                       </p>
                     </div>

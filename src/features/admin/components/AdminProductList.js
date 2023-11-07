@@ -105,7 +105,9 @@ export default function AdminProductList() {
 
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
-    dispatch(fetchAllProductByFilterAsync({ filter, sort, pagination }));
+    dispatch(
+      fetchAllProductByFilterAsync({ filter, sort, pagination, admin: true })
+    );
   }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
@@ -444,13 +446,24 @@ function ProductGrid({ products }) {
                         className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                       />
                     </div>
-                    {product.deleted && (
-                      <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-white bg-opacity-90 rounded-md">
-                        <p className="text-sm text-red-500 font-bold">
-                          Product Deleted
-                        </p>
-                      </div>
-                    )}
+
+                    <div>
+                      {product.deleted && (
+                        <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-slate-100  rounded-md shadow-md">
+                          <p className="text-xs text-red-500 font-bold">
+                            Product Deleted
+                          </p>
+                        </div>
+                      )}
+                      {product.stock <= 0 && (
+                        <div className="absolute top-0 left-0 mt-2 ml-2 p-2 bg-white bg-opacity-90 rounded-md">
+                          <p className="text-xs text-red-500 font-bold">
+                            Out of Stock
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    
                     <div className="mt-4 flex justify-between">
                       <div>
                         <h3 className="text-sm text-gray-700">

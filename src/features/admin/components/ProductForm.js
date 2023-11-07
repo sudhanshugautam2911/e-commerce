@@ -34,7 +34,7 @@ export default function ProductForm() {
     if (params.id) {
       dispatch(fetchProductByIdAsync(params.id));
     } else {
-      dispatch(clearSelectedProduct())
+      dispatch(clearSelectedProduct());
     }
   }, [params.id, dispatch]);
 
@@ -56,10 +56,10 @@ export default function ProductForm() {
   }, [selectedProduct, params.id, setValue]);
 
   const handleDelete = () => {
-    const product = {...selectedProduct};
+    const product = { ...selectedProduct };
     product.deleted = true;
-    dispatch(updateProductAsync(product))
-  }
+    dispatch(updateProductAsync(product));
+  };
   return (
     <form
       noValidate
@@ -100,6 +100,11 @@ export default function ProductForm() {
           </h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            {selectedProduct && selectedProduct.deleted && (
+              <h2 className="text-red-500 sm:col-span-6">
+                This product is deleted
+              </h2>
+            )}
             <div className="sm:col-span-4">
               <label
                 htmlFor="title"
@@ -522,14 +527,14 @@ export default function ProductForm() {
         >
           Cancel
         </button>
-        { selectedProduct &&
+        {selectedProduct && !selectedProduct.deleted && (
           <button
             onClick={handleDelete}
             className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
             Delete
           </button>
-        }
+        )}
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

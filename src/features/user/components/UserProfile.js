@@ -16,14 +16,14 @@ export default function UserProfile() {
     setValue,
     formState: { errors },
   } = useForm();
-  const user = useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddAddress, setShowAddAddress] = useState(false);
 
   // we will add payment section when we work on backend
 
   const handleEdit = (addressUpdate, index) => {
-    const newUser = { ...user, addresses: [...user.addresses] };
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] };
     newUser.addresses.splice(index, 1, addressUpdate); //addressUpdate: This is the element that will be inserted in place of the removed element.
     dispatch(updateUserAsync(newUser));
     setSelectedEditIndex(-1);
@@ -32,14 +32,14 @@ export default function UserProfile() {
   const handleRemove = (e, index) => {
     // ...user  --> this create a shallow copy of the user , as we can't directly update user
     // addresses: [...user.addresses]: This part is updating the addresses property of the new object. It's creating a shallow copy of the addresses array from the original user object using the spread syntax [...user.addresses]
-    const newUser = { ...user, addresses: [...user.addresses] }; // for shallow copy issue
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses] }; // for shallow copy issue
     newUser.addresses.splice(index, 1);
     dispatch(updateUserAsync(newUser));
   };
 
   const handleEditForm = (index) => {
     setSelectedEditIndex(index);
-    const address = user.addresses[index];
+    const address = userInfo.addresses[index];
     setValue("name", address.name);
     setValue("email", address.email);
     setValue("phone", address.phone);
@@ -50,7 +50,7 @@ export default function UserProfile() {
   };
 
   const handleAdd = (address) => {
-    const newUser = { ...user, addresses: [...user.addresses, address] }; // for shallow copy issue , addresses: [...user.addresses, address] -> pushing address as new
+    const newUser = { ...userInfo, addresses: [...userInfo.addresses, address] }; // for shallow copy issue , addresses: [...user.addresses, address] -> pushing address as new
     dispatch(updateUserAsync(newUser));
     setShowAddAddress(false);
   };
@@ -74,10 +74,10 @@ export default function UserProfile() {
       <div className="mx-auto sm:px-6 lg:px-8 max-w-screen-xl">
         <div className="bg-white px-4 py-3 my-6 rounded-md">
           <h1 className="text-3xl  flex font-bold  text-gray-900">
-            Name: {user.name ? user.name : "New User"}
+            Name: {userInfo.name ? userInfo.name : "New User"}
           </h1>
           <h3 className="text-lg mt-2 mb-4 flex font-semibold  text-red-900">
-            email address : {user.email}
+            email address : {userInfo.email}
           </h3>
           <div className="px-4 py-6 sm:px-6 "></div>
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -271,7 +271,7 @@ export default function UserProfile() {
 
             <p className="mt-0.5 text-sm text-gray-500">Saved Address</p>
 
-            {user.addresses.map((address, index) => (
+            {userInfo.addresses.map((address, index) => (
               <div>
                 {/* edit address */}
                 {selectedEditIndex === index ? (
