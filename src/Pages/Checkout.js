@@ -8,9 +8,6 @@ import {
   updateCartAsync,
 } from "../features/Cart/cartSlice";
 import { useForm } from "react-hook-form";
-// import {
-//   selectLoggedInUser,
-// } from "../features/auth/authSlice";
 import { updateUserAsync } from "../features/user/userSlice"
 import { createOrderAsync, selectCurrentOrder } from "../features/order/orderSlice";
 import { discountPrice } from "../app/constants";
@@ -30,7 +27,7 @@ const Checkout = () => {
   const items = useSelector(selectItems);
   const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
-  console.log("currentOrder ", currentOrder)
+  console.log("currentOrder ss", currentOrder)
 
 
   // calculate using reducer - new to me

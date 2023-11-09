@@ -5,14 +5,11 @@ import { discountPrice } from "../../../app/constants";
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrder);
-  console.log("user order from selectUserOrder : ", orders)
 
   useEffect(() => {
-    console.log("user id is " + userInfo.id);
-    dispatch(fetchLoggedInUserOrdersAsync(userInfo.id));
-  }, []);
+    dispatch(fetchLoggedInUserOrdersAsync());
+  }, [dispatch]);
 
   return (
     <div className="mx-auto sm:px-6 lg:px-8 max-w-screen-xl ">

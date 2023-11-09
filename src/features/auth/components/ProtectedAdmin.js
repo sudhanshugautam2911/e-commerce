@@ -9,6 +9,7 @@ function ProtectedAdmin({children}) {
     if (!user) {
         return <Navigate to='/login' replace={true}></Navigate>
     }
+    // diff between code
     if (userInfo && userInfo.role !== 'admin') {
         alert("You are not Admin, Please login with your Admin id");
         return <Navigate to='/' replace={true}></Navigate>

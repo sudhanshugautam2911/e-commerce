@@ -36,19 +36,19 @@ export function deleteCartItem(itemId) {
 }
 
 
-export function fetchItemsByUserId(userId) {
+export function fetchItemsByUserId() {
   return new Promise(async (resolve) => {
 
-    const response = await fetch("http://localhost:8080/cart?user=" + userId);
+    const response = await fetch("http://localhost:8080/cart" );
     const data = await response.json();
     resolve({ data });
   });
 }
 
-export function resetCart(userId) {
+export function resetCart() {
   return new Promise(async (resolve) => {
 
-    const response = await fetchItemsByUserId(userId);
+    const response = await fetchItemsByUserId();
     const items = response.data;
 
     for (let item of items) {

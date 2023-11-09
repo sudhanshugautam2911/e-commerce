@@ -14,7 +14,7 @@ function OrderSuccessPage() {
 
   useEffect(()=> {
     // reset cart after order is done
-    dispatch(resetCartAsync(user.id));
+    dispatch(resetCartAsync());
 
     // reset current Order , so that we can make more orders
     dispatch(resetCurrentOrder());

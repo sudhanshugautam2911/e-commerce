@@ -8,7 +8,6 @@ import {
 } from "../../product/productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../Cart/cartSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountPrice } from "../../../app/constants";
 
 // TODO : In server we will add colors, sizes and highlight to each product
@@ -37,11 +36,10 @@ export default function AdminProductDetails() {
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   // react routing feature
   const params = useParams();
 
-  const newItem = {...product, quantity:1, user:user.id};
+  const newItem = {...product, quantity:1};
   delete newItem['id'];
   // backend will automatically an Id 
   // console.log(newItem);

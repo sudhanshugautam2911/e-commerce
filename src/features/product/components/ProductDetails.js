@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountPrice } from "../../../app/constants";
 
 // TODO : In server we will add colors, sizes and highlight to each product
@@ -89,7 +88,6 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   // react routing feature
   const params = useParams();
   const items = useSelector(selectItems);
@@ -102,8 +100,7 @@ export default function ProductDetails() {
     if (items.findIndex(item => item.product.id === product.id) < 0) {
       const newItem = {
         product: product.id,
-        quantity: 1,
-        user: user.id,
+        quantity: 1
       };
       dispatch(addToCartAsync(newItem));
     }else {
