@@ -4,7 +4,6 @@ import Home from "./Pages/Home";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
 
-import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,7 +16,7 @@ import ProductDetailPage from "./Pages/ProductDetailPage";
 import Protected from "./features/auth/components/Protected";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync } from "./features/Cart/cartSlice";
-import { selectLoggedInUser } from "./features/auth/authSlice";
+import { checkAuthAsync, selectLoggedInUser, selectUserChecked } from "./features/auth/authSlice";
 import PageNotFound from "./Pages/404";
 import OrderSuccessPage from "./Pages/OrderSuccessPage";
 import UserOrderPage from "./Pages/UserOrderPage";
@@ -30,6 +29,7 @@ import AdminProductDetailPage from "./Pages/AdminProductDetailPage";
 import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
 import AdminProductFormPage from "./Pages/AdminProductFormPage";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
+import StripeCheckout from "./Pages/StripeCheckout";
 
 // TO RUN THIS APP
 // npm run start
@@ -130,6 +130,14 @@ const router = createBrowserRouter([
     element: <OrderSuccessPage></OrderSuccessPage>,
   },
   {
+    path: "/stripe-checkout/",
+    element: (
+      <Protected>
+        <StripeCheckout></StripeCheckout>
+      </Protected>
+    ),
+  },
+  {
     path: "/orders",
     element: (
       <Protected>
@@ -158,9 +166,14 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
+  const userChecked = useSelector(selectUserChecked)
 
   useEffect(() => {
-    if (user) {
+    dispatch(checkAuthAsync());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    if (user && userChecked) {
       dispatch(fetchItemsByUserIdAsync());
       // if we can get req.user by token on backend no need to give in fron-end
       dispatch(fetchLoggedInUserAsync());
@@ -169,7 +182,9 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      { userChecked &&
+        <RouterProvider router={router} />
+      }
     </div>
   );
 }

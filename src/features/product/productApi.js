@@ -1,13 +1,13 @@
 export function fetchProductById(id) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products/" + id);
+    const response = await fetch("/products/" + id);
     const data = await response.json();
     resolve({ data });
   });
 }
 export function createProduct(product) {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/products/", {
+    const response = await fetch("/products/", {
       method: "POST",
       body: JSON.stringify(product),
       headers: { "content-type": "application/json" },
@@ -19,7 +19,7 @@ export function createProduct(product) {
 export function updateProduct(update) {
   return new Promise(async (resolve) => {
     // kind of uploading data on our api
-    const response = await fetch("http://localhost:8080/products/" + update.id, {
+    const response = await fetch("/products/" + update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "content-type": "application/json" },
@@ -32,14 +32,14 @@ export function updateProduct(update) {
 
 export function fetchAllBrands() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/brands");
+    const response = await fetch("/brands");
     const data = await response.json();
     resolve({ data });
   });
 }
 export function fetchAllCategory() {
   return new Promise(async (resolve) => {
-    const response = await fetch("http://localhost:8080/categories");
+    const response = await fetch("/categories");
     const data = await response.json();
     resolve({ data });
   });
@@ -82,7 +82,7 @@ export function fetchAllProductByFilter(filter, sort, pagination, admin) {
     // This temporary url is done with the help of json-server
 
     const response = await fetch(
-      "http://localhost:8080/products?" + queryString
+      "/products?" + queryString
     );
     const data = await response.json();
     // it is a feature of api we are using

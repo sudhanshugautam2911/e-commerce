@@ -46,7 +46,7 @@ export const fetchAllProductByFilterAsync = createAsyncThunk(
   'product/fetchAllProductByFilter',
   async ({filter, sort, pagination, admin}) => {
     const response = await fetchAllProductByFilter(filter, sort, pagination, admin);
-    // console.log(response.data);
+    console.log("Product response is ", response.data);
     return response.data;
   }
 );

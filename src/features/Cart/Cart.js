@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
-import { deleteCartItemAsync, selectItems, updateCartAsync } from "./cartSlice";
+import { deleteCartItemAsync, selectCartLoaded, selectItems, updateCartAsync } from "./cartSlice";
 import { discountPrice } from "../../app/constants";
 
 const products = [
@@ -40,7 +40,8 @@ export default function Cart() {
   const [open, setOpen] = useState(true);
   const disptach = useDispatch();
   const items = useSelector(selectItems);
-
+  const cartLoaded = useSelector(selectCartLoaded);
+  
   // calculate using reducer - new to me
   const totalAmount = items.reduce(
     (amount, item) => discountPrice(item.product) * item.quantity + amount,
@@ -62,7 +63,7 @@ export default function Cart() {
 
   return (
     <>
-      {!items.length && <Navigate to="/" replace={true}></Navigate>}
+      {!items.length && cartLoaded && <Navigate to="/" replace={true}></Navigate>}
 
       {/* max-w-7xl , bg-white */}
       <div className="mx-auto bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">

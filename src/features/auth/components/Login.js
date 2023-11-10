@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  checkUserAsync,
+  loginUserAsync,
   selectError,
   selectLoggedInUser,
 } from "../authSlice";
@@ -44,7 +44,7 @@ export default function Login() {
             onSubmit={handleSubmit((data) => {
               // console.log(data);
               dispatch(
-                checkUserAsync({ email: data.email, password: data.password })
+                loginUserAsync({ email: data.email, password: data.password })
               );
             })}
           >

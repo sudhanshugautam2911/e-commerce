@@ -8,14 +8,17 @@ import {
   updateCartAsync,
 } from "../features/Cart/cartSlice";
 import { useForm } from "react-hook-form";
-import { updateUserAsync } from "../features/user/userSlice"
-import { createOrderAsync, selectCurrentOrder } from "../features/order/orderSlice";
+import { updateUserAsync } from "../features/user/userSlice";
+import {
+  createOrderAsync,
+  selectCurrentOrder,
+} from "../features/order/orderSlice";
 import { discountPrice } from "../app/constants";
-import { selectUserInfo } from '../features/user/userSlice';
+import { selectUserInfo } from "../features/user/userSlice";
 
 const Checkout = () => {
   const [open, setOpen] = useState(true);
-  
+
   const {
     register,
     handleSubmit,
@@ -27,8 +30,6 @@ const Checkout = () => {
   const items = useSelector(selectItems);
   const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
-  console.log("currentOrder ss", currentOrder)
-
 
   // calculate using reducer - new to me
   const totalAmount = items.reduce(
@@ -39,10 +40,9 @@ const Checkout = () => {
   const [selectedAddresses, setselectedAddresses] = useState(null);
   const [paymentMethod, setpaymentMethod] = useState("cash");
 
-  
   const handleQuantity = (e, item) => {
     // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
-    disptach(updateCartAsync({ id: item.id, quantity: + e.target.value }));
+    disptach(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
   const handleDelete = (e, id) => {
     disptach(deleteCartItemAsync(id));
@@ -56,7 +56,7 @@ const Checkout = () => {
     setpaymentMethod(e.target.value);
   };
   const handleOrder = (e) => {
-    if(selectedAddresses && paymentMethod) {
+    if (selectedAddresses && paymentMethod) {
       const order = {
         items,
         totalAmount,
@@ -64,24 +64,36 @@ const Checkout = () => {
         user: user.id,
         paymentMethod,
         selectedAddresses,
-        status: 'pending',  // order state -> delivered, recived etc 
+        status: "pending", // order state -> delivered, recived etc
       };
       disptach(createOrderAsync(order));
-    }else {
+    } else {
       // TODO: we can use proper messaging popup here
-      alert('Enter Address and Payment method')
+      alert("Enter Address and Payment method");
     }
 
     // TODO: redirect to order-success page
     // TODO: clear cart once order placed
     // TODO: on server change stock of remaining items
-    
   };
 
   return (
     <>
       {!items.length && <Navigate to="/" replace={true}></Navigate>}
-      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true} ></Navigate>}
+
+      {currentOrder && currentOrder.paymentMethod === 'cash' && (
+        <Navigate
+          to={`/order-success/${currentOrder.id}`}
+          replace={true}
+        ></Navigate>
+      )}
+      {currentOrder && currentOrder.paymentMethod === 'card' && (
+        <Navigate
+          to={`/stripe-checkout/`}
+          replace={true}
+        ></Navigate>
+      )}
+   
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-7    ">
           <div className="lg:col-span-4">
@@ -386,9 +398,13 @@ const Checkout = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.product.id}>{item.product.title}</a>
+                                <a href={item.product.id}>
+                                  {item.product.title}
+                                </a>
                               </h3>
-                              <p className="ml-4">${discountPrice(item.product)}</p>
+                              <p className="ml-4">
+                                ${discountPrice(item.product)}
+                              </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {item.color}
