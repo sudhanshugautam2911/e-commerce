@@ -181,7 +181,7 @@ function App() {
   }, [dispatch, user]);
 
   return (
-    <div>
+    <div className="bg-white">
       { userChecked &&
         <RouterProvider router={router} />
       }

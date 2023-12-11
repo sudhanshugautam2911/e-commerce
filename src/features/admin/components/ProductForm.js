@@ -26,7 +26,6 @@ export default function ProductForm() {
   } = useForm();
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
-  const selectedProduct = useSelector(selectProductById);
   const dispatch = useDispatch();
 
   // when we click on edit product(in AdminProductList) productForm opens so params help us to find the id on which we clicked when productForm opened
@@ -40,6 +39,10 @@ export default function ProductForm() {
       dispatch(clearSelectedProduct());
     }
   }, [params.id, dispatch]);
+
+  const selectedProduct = useSelector(selectProductById);
+  console.log("selectedProduct ", selectedProduct);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedProduct && params.id) {
@@ -57,21 +60,26 @@ export default function ProductForm() {
       setValue("image3", selectedProduct.images[2]);
     }
   }, [selectedProduct, params.id, setValue]);
-  const navigate = useNavigate();
+
   const handleDelete = () => {
     const product = { ...selectedProduct };
     product.deleted = true;
     dispatch(updateProductAsync(product));
-    toast.success('Product is deleted')
+    toast.success("Product is deleted");
     setTimeout(() => {
-      navigate('/admin');
+      navigate("/admin");
     }, 3000);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <>
+    <div className="max-w-7xl flex justify-center items-center">
       <form
         noValidate
-        className="p-8 bg-white rounded-md"
+        className="p-3 sm:p-8 bg-white rounded-md "
         onSubmit={handleSubmit((data) => {
           const product = { ...data };
           product.images = [
@@ -104,7 +112,7 @@ export default function ProductForm() {
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-3xl font-extrabold leading-7 text-PrimaryColor">
               Add Product
             </h2>
 
@@ -136,7 +144,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="col-span-full">
+              <div className="col-span-3 sm:col-span-full max-sm:max-w-[290px]">
                 <label
                   htmlFor="description"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -198,7 +206,7 @@ export default function ProductForm() {
               </div>
 
               {/* Price, dicount and  Stock*/}
-              <div className="sm:col-span-2">
+              <div className="col-span-3 sm:col-span-2">
                 <label
                   htmlFor="price"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -221,7 +229,7 @@ export default function ProductForm() {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 col-span-3">
                 <label
                   htmlFor="discountPercentage"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -247,7 +255,7 @@ export default function ProductForm() {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 col-span-3">
                 <label
                   htmlFor="stock"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -272,7 +280,7 @@ export default function ProductForm() {
               </div>
 
               {/* Links of all images */}
-              <div className="sm:col-span-6">
+              <div className="sm:col-span-6 col-span-3 max-sm:max-w-[290px]">
                 <label
                   htmlFor="thumbnail"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -293,7 +301,7 @@ export default function ProductForm() {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-6">
+              <div className="sm:col-span-6 col-span-3 max-sm:max-w-[290px]">
                 <label
                   htmlFor="image1"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -314,7 +322,7 @@ export default function ProductForm() {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-6">
+              <div className="sm:col-span-6 col-span-3 max-sm:max-w-[290px]">
                 <label
                   htmlFor="image2"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -335,7 +343,7 @@ export default function ProductForm() {
                   </div>
                 </div>
               </div>
-              <div className="sm:col-span-6">
+              <div className="sm:col-span-6 col-span-3 max-sm:max-w-[290px]">
                 <label
                   htmlFor="image3"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -540,7 +548,10 @@ export default function ProductForm() {
           </Link>
           {selectedProduct && !selectedProduct.deleted && (
             <button
-              onClick={ (e)=> { e.preventDefault(); setOpenModal(true)}}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal(true);
+              }}
               className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
             >
               Delete
@@ -554,16 +565,18 @@ export default function ProductForm() {
           </button>
         </div>
       </form>
-
-      <Modal
-        title={`Delete ${selectedProduct.title}`}
-        message="Are you sure you want to delete this product?"
-        dangertOption="Delete"
-        cancelOption="Cancel"
-        dangerAction={handleDelete}
-        cancelAction={() => setOpenModal(null)}
-        showModal={openModal}
-      ></Modal>
+      
+      { selectedProduct &&
+        <Modal
+          title={`Delete ${selectedProduct.title}`}
+          message="Are you sure you want to delete this product?"
+          dangertOption="Delete"
+          cancelOption="Cancel"
+          dangerAction={handleDelete}
+          cancelAction={() => setOpenModal(null)}
+          showModal={openModal}
+        ></Modal>
+      }
       <ToastContainer
         position="top-center"
         autoClose={2000}
@@ -576,6 +589,6 @@ export default function ProductForm() {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 }

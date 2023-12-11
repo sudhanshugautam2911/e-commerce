@@ -115,7 +115,7 @@ const Checkout = () => {
             >
               <div className="space-y-12 ">
                 <div className="border-b border-gray-900/10 pb-12">
-                  <h2 className="text-xl my-5 font-medium flex text-gray-900">
+                  <h2 className="text-3xl my-5 font-bold flex text-PrimaryColor">
                     Personal Information
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -421,6 +421,7 @@ const Checkout = () => {
                               </label>
 
                               <select
+                                className="rounded-md text-xs"
                                 onChange={(e) => handleQuantity(e, item)}
                                 value={item.quantity}
                               >
@@ -450,15 +451,15 @@ const Checkout = () => {
               </div>
 
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div className="flex justify-between text-base font-medium text-gray-900">
+                <div className="flex justify-between text-base font-normal text-TextColor">
                   <p>Total Items in cart</p>
                   <p>{totalItems} items</p>
                 </div>
-                <div className="flex justify-between text-base font-medium text-gray-900">
-                  <p>Subtotal</p>
+                <div className="flex justify-between font-bold text-TextColor">
+                  <p>Total Amount</p>
                   <p>${totalAmount}</p>
                 </div>
-                <p className="mt-0.5 text-sm text-gray-500">
+                <p className="mt-0.5 text-sm text-TextColor">
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">

@@ -64,10 +64,10 @@ function AdminOrders() {
   };
 
   return (
-    <>
+    <div className="flex justify-center items-center">
       {/* component */}
       <div className="overflow-x-auto">
-        <div className="min-w-screen bg-gray-100 flex items-center justify-center font-sans overflow-hidden">
+        <div className="min-w-screen bg-white flex items-center justify-center font-sans overflow-hidden">
           <div className="w-full ">
             <div className="bg-white  shadow-md rounded my-6">
               <table className="min-w-max w-full table-auto">
@@ -219,7 +219,7 @@ function AdminOrders() {
           totalItems={totalOrders}
         ></Pagination>
       </div>
-    </>
+    </div>
   );
 }
 

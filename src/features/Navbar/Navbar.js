@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -10,11 +10,8 @@ import { useSelector } from "react-redux";
 import { selectItems } from "../Cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
 
-const navigation = [
-  { name: "Products", link: "#", user: true },
-  { name: "Manage Products", link: "/admin", admin: true },
-  { name: "All Orders", link: "/admin/orders", admin: true },
-];
+
+
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
   { name: "My Orders", link: "/my-orders" },
@@ -28,6 +25,23 @@ function classNames(...classes) {
 function Navbar({ children }) {
   const items = useSelector(selectItems);
   const userInfo = useSelector(selectUserInfo);
+  const [activeNavItem, setActiveNavItem] = useState("");
+
+  const navigation = useMemo(() => [
+  
+    { name: "Products", link: "#", user: true },
+    { name: "Manage Products", link: "/admin", admin: true, current: activeNavItem === "Manage Products" },
+    { name: "All Orders", link: "/admin/orders", admin: true, current: activeNavItem === "All Orders" },
+  ], [activeNavItem]);
+
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    const activeItem = navigation.find((item) => item.link === pathname);
+    if (activeItem) {
+      setActiveNavItem(activeItem.name);
+    }
+  }, [navigation]);
+
 
   return (
     <>
@@ -59,9 +73,9 @@ function Navbar({ children }) {
                               key={item.name}
                               className={classNames(
                                 item.current
-                                  ? "bg-white-300 text-gray-800"
-                                  : "text-gray-800 hover:bg-gray-700 hover:text-white",
-                                "rounded-md px-3 py-2 text-base font-medium"
+                                  ? "text-black border-b-2 border-PrimaryColor"
+                                  : "text-gray-600 border-b-2 border-transparent hover:border-b-2 hover:border-PrimaryColor",
+                                "px-3 py-2 text-base font-medium"
                               )}
                               aria-current={item.current ? "page" : undefined}
                             >
@@ -156,22 +170,23 @@ function Navbar({ children }) {
 
               <Disclosure.Panel className="md:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-white-300 text-gray-800"
-                          : "text-gray-800 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
+                  {navigation.map((item) =>
+                    item[userInfo?.role] ? (
+                      <Link
+                        to={item.link}
+                        key={item.name}
+                        className={classNames(
+                          item.current
+                            ? "bg-white-300 text-gray-800"
+                            : "text-gray-800 hover:bg-gray-700 hover:text-white",
+                          "rounded-md px-3 py-2 text-base font-medium"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    ) : null
+                  )}
                 </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
@@ -210,14 +225,14 @@ function Navbar({ children }) {
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
-                      <Disclosure.Button
+                      <Link
                         key={item.name}
                         as="a"
-                        href={item.href}
+                        to={item.link}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
                       >
                         {item.name}
-                      </Disclosure.Button>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -236,7 +251,7 @@ function Navbar({ children }) {
           </div>
         </header> */}
         <main>
-          <div className="mx-auto max-w-full py-6 sm:px-6 lg:px-8 flex items-center justify-center">
+          <div>
             {children}
           </div>
         </main>

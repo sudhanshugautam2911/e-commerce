@@ -68,17 +68,17 @@ export default function Cart() {
   };
 
   return (
-    <>
+    <>  
       {!items.length && cartLoaded && (
         <Navigate to="/" replace={true}></Navigate>
       )}
 
       {/* max-w-7xl , bg-white */}
       <div className="mx-auto bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">
-        <h1 className="text-4xl my-10 flex justify-center font-bold  text-gray-900">
-          Shopping Cart
+        <h1 className="text-xs my-10 flex justify-center font-bold  text-TextColor">
+          <span className="text-[#4F46E5] mr-2">MY BAG</span>  - - - - - - - - - - - - - <span className="mx-2">ADDRESS</span> - - - - - - - - - - - - - <span className="ml-2">PAYMENT</span>
         </h1>
-        <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
+        <div className="border-b border-gray-200 px-4 py-6 sm:px-6 ">
           <div className="flow-root ">
             {/* spinner */}
             {status === "loading" && (
@@ -89,7 +89,7 @@ export default function Cart() {
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {items.map((item) => (
                 <li key={item.id} className="flex py-6">
-                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                  <div className="h-44 w-40 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
                       src={item.product.thumbnail}
                       alt={item.product.title}
@@ -120,6 +120,7 @@ export default function Cart() {
                         </label>
 
                         <select
+                          className="rounded-md text-xs"
                           onChange={(e) => handleQuantity(e, item)}
                           value={item.quantity}
                         >
@@ -158,15 +159,15 @@ export default function Cart() {
         </div>
 
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-          <div className="flex justify-between text-base font-medium text-gray-900">
+          <div className="flex justify-between text-base font-normal text-TextColor">
             <p>Total Items in cart</p>
             <p>{totalItems} items</p>
           </div>
-          <div className="flex justify-between text-base font-medium text-gray-900">
-            <p>Subtotal</p>
+          <div className="flex justify-between text-TextColor font-bold">
+            <p>Total Amount</p>
             <p>${totalAmount}</p>
           </div>
-          <p className="mt-0.5 text-sm text-gray-500">
+          <p className="mt-0.5 text-sm text-TextColor">
             Shipping and taxes calculated at checkout.
           </p>
           <div className="mt-6">

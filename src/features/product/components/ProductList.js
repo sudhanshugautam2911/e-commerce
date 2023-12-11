@@ -127,7 +127,7 @@ export default function ProductList() {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white min-w-full mx-auto max-w-full py-6 sm:px-6 lg:px-8 flex items-center justify-center">
       <div>
         {/* Mobile filter dialog */}
         <MobileFilter
@@ -140,7 +140,7 @@ export default function ProductList() {
         {/* Laptop screens */}
         <main className="mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-4xl font-newStyle text-gray-800">
               New Arrivals
             </h1>
 

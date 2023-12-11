@@ -3,7 +3,7 @@ function Footer() {
     <>
       {/* component */}
       <div className="flex items-center w-full bg-white">
-        <footer className="w-full text-gray-700 bg-white body-font">
+        <footer className="w-full text-gray-700 bg-gray-100 body-font">
           <div className="container flex flex-col flex-wrap px-16 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-no-wrap">
             <div className="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
               <h1 className="flex items-center justify-center md:justify-start font-bold text-2xl">SimpleMart</h1>

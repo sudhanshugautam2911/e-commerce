@@ -122,7 +122,7 @@ export default function AdminProductList() {
   return (
     <div>
       <div>
-        <div className="bg-white">
+        <div className="bg-white mx-auto  min-w-full max-w-full py-6 sm:px-6 lg:px-8 flex items-center justify-center">
           <div>
             {/* Mobile filter dialog */}
             <MobileFilter
@@ -135,7 +135,7 @@ export default function AdminProductList() {
             {/* Laptop screens, max-w-7xl */}
             <main className="mx-auto px-4 sm:px-6 lg:px-8 ">
               <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+                <h1 className="text-4xl font-newStyle text-gray-700 ">
                   Your Products
                 </h1>
 
@@ -224,8 +224,8 @@ export default function AdminProductList() {
                     <div>
                       <Link to="/admin/product-form">
                         <button
-                          type="submit"
-                          className="rounded-md bg-green-500 px-3 py-2 mx-8 my-3 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-400 focus:ring-opacity-50"
+                          // type="submit"
+                          className="rounded-md bg-green-500 px-3 py-2 mx-8 my-3 text-sm font-mono text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-400 focus:ring-opacity-50"
                         >
                           Add New Product
                         </button>
@@ -453,15 +453,15 @@ function ProductGrid({ products }) {
 
                     <div>
                       {product.deleted && (
-                        <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-slate-100  rounded-md shadow-md">
-                          <p className="text-xs text-red-500 font-bold">
+                        <div className="absolute top-0 right-0 mt-2 mr-2 p-2 bg-white  rounded-md shadow-sm">
+                          <p className="text-xs text-red-500 font-mono">
                             Product Deleted
                           </p>
                         </div>
                       )}
                       {product.stock <= 0 && (
-                        <div className="absolute top-0 left-0 mt-2 ml-2 p-2 bg-white bg-opacity-90 rounded-md">
-                          <p className="text-xs text-red-500 font-bold">
+                        <div className="absolute top-0 left-0 mt-2 ml-2 p-2 bg-white  rounded-md">
+                          <p className="text-xs text-red-500 font-mono">
                             Out of Stock
                           </p>
                         </div>
@@ -500,7 +500,7 @@ function ProductGrid({ products }) {
                   <Link
                     to={`/admin/product-form/edit/${product.id}`}
                     type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 my-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all duration-300"
+                    className="rounded-md bg-indigo-600 px-3 py-2 my-3 text-sm font-mono text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all duration-300"
                   >
                     Edit Product
                   </Link>
