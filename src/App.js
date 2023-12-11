@@ -45,7 +45,7 @@ const router = createBrowserRouter([
 
     element: (
       <Protected>
-        <Home></Home>,
+        <Home></Home>
       </Protected>
     ),
   },
@@ -138,7 +138,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/orders",
+    path: "/my-orders",
     element: (
       <Protected>
         <UserOrderPage></UserOrderPage>
@@ -181,7 +181,7 @@ function App() {
   }, [dispatch, user]);
 
   return (
-    <div className="App">
+    <div>
       { userChecked &&
         <RouterProvider router={router} />
       }

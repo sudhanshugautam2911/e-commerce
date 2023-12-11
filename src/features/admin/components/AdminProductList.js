@@ -115,6 +115,10 @@ export default function AdminProductList() {
     dispatch(fetchAllCategoryAsync());
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div>
       <div>
@@ -128,8 +132,8 @@ export default function AdminProductList() {
               filters={filters}
             ></MobileFilter>
 
-            {/* Laptop screens */}
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            {/* Laptop screens, max-w-7xl */}
+            <main className="mx-auto px-4 sm:px-6 lg:px-8 ">
               <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900">
                   Your Products

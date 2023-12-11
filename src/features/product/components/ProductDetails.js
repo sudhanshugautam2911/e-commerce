@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByIdAsync, selectProductById } from "../productSlice";
+import { fetchProductByIdAsync, selectProductById, selectProductListStatus } from "../productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import { discountPrice } from "../../../app/constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import HashLoader from "react-spinners/HashLoader";
 
 // TODO : In server we will add colors, sizes and highlight to each product
 const colors = [
@@ -83,6 +86,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+
 export default function ProductDetails() {
   const product = useSelector(selectProductById);
   const [selectedColor, setSelectedColor] = useState();
@@ -91,29 +95,43 @@ export default function ProductDetails() {
   // react routing feature
   const params = useParams();
   const items = useSelector(selectItems);
+  const status = useSelector(selectProductListStatus)
 
   // backend will automatically an Id
 
   const handleCart = (e) => {
     e.preventDefault();
     console.log("Product id is ", product.id);
-    if (items.findIndex(item => item.product.id === product.id) < 0) {
+    if (items.findIndex((item) => item.product.id === product.id) < 0) {
       const newItem = {
         product: product.id,
-        quantity: 1
+        quantity: 1,
       };
       dispatch(addToCartAsync(newItem));
-    }else {
-      alert("Item Already Added")
+      // TODO: at wait untill server response back from backend
+      toast.success("Item added to cart");
+    } else {
+      toast.info("Item Already added");
+      // alert("Item Already Added")
     }
   };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
-
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="bg-white">
+      {/* spinner */}
+      {status === "loading" && (
+        <div className="flex items-center justify-center w-full h-full">
+          <HashLoader color="#4F46E5" />
+        </div>
+      )}
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
@@ -405,6 +423,18 @@ export default function ProductDetails() {
           </div>
         </div>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

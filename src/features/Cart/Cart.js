@@ -4,8 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
-import { deleteCartItemAsync, selectCartLoaded, selectItems, updateCartAsync } from "./cartSlice";
+import {
+  deleteCartItemAsync,
+  selectCartLoaded,
+  selectCartStatus,
+  selectItems,
+  updateCartAsync,
+} from "./cartSlice";
 import { discountPrice } from "../../app/constants";
+import HashLoader from "react-spinners/HashLoader";
+import Modal from "../common/Modal";
 
 const products = [
   {
@@ -37,25 +45,23 @@ const products = [
 
 // My latest code
 export default function Cart() {
-  const [open, setOpen] = useState(true);
+  const [openModal, setOpenModal] = useState(null);
   const disptach = useDispatch();
   const items = useSelector(selectItems);
   const cartLoaded = useSelector(selectCartLoaded);
-  
+  const status = useSelector(selectCartStatus);
+
   // calculate using reducer - new to me
   const totalAmount = items.reduce(
     (amount, item) => discountPrice(item.product) * item.quantity + amount,
     0
   );
-  const totalItems = items.reduce(
-    (total, item) => item.quantity + total,
-     0
-  );
+  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   console.log("total items ", totalItems);
 
   const handleQuantity = (e, item) => {
     // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
-    disptach(updateCartAsync({ id:item.id, quantity: +e.target.value }));
+    disptach(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
   const handleDelete = (e, id) => {
     disptach(deleteCartItemAsync(id));
@@ -63,7 +69,9 @@ export default function Cart() {
 
   return (
     <>
-      {!items.length && cartLoaded && <Navigate to="/" replace={true}></Navigate>}
+      {!items.length && cartLoaded && (
+        <Navigate to="/" replace={true}></Navigate>
+      )}
 
       {/* max-w-7xl , bg-white */}
       <div className="mx-auto bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">
@@ -72,11 +80,17 @@ export default function Cart() {
         </h1>
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
           <div className="flow-root ">
+            {/* spinner */}
+            {status === "loading" && (
+              <div className="flex items-center justify-center w-full h-full m-4">
+                <HashLoader color="#4F46E5" />
+              </div>
+            )}
             <ul role="list" className="-my-6 divide-y divide-gray-200">
               {items.map((item) => (
                 <li key={item.id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                    <img 
+                    <img
                       src={item.product.thumbnail}
                       alt={item.product.title}
                       className="h-full w-full object-cover object-center"
@@ -91,7 +105,9 @@ export default function Cart() {
                         </h3>
                         <p className="ml-4">${discountPrice(item.product)}</p>
                       </div>
-                      <p className="mt-1 text-sm text-gray-500">{item.product.brand}</p>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {item.product.brand}
+                      </p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
                       <div className="text-gray-500">
@@ -116,8 +132,17 @@ export default function Cart() {
                       </div>
 
                       <div className="flex">
+                        <Modal
+                          title={`Delete ${item.product.title}`}
+                          message="Are you sure you want to delete this cart item?"
+                          dangertOption="Delete"
+                          cancelOption="Cancel"
+                          dangerAction={(e) => handleDelete(e, item.id)}
+                          cancelAction={()=> setOpenModal(null)}
+                          showModal={openModal === item.id}
+                        ></Modal>
                         <button
-                          onClick={(e) => handleDelete(e, item.id)}
+                          onClick={e => {setOpenModal(item.id)}}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
@@ -159,7 +184,6 @@ export default function Cart() {
                 <button
                   type="button"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
-                  onClick={() => setOpen(false)}
                 >
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>

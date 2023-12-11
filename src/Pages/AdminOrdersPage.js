@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../features/Navbar/Navbar";
 import AdminOrders from "../features/admin/components/AdminOrders";
 import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import Footer from "../features/common/Footer";
 
 const AdminOrdersPage = () => {
   const [showPopup, setShowPopup] = useState(true);
@@ -25,6 +26,7 @@ const AdminOrdersPage = () => {
         )}
         <AdminOrders></AdminOrders>
       </Navbar>
+      <Footer></Footer>
     </div>
   );
 };

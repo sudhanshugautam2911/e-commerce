@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../features/Navbar/Navbar'
 import ProductDetails from '../features/product/components/ProductDetails';
+import Footer from '../features/common/Footer';
 
 const ProductDetailPage = () => {
   return (
@@ -8,6 +9,7 @@ const ProductDetailPage = () => {
         <Navbar>
             <ProductDetails></ProductDetails>
         </Navbar>
+        <Footer/>
     </div>
   )
 }
