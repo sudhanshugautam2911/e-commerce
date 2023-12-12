@@ -7,7 +7,13 @@ module.exports = {
     extend: {
       fontFamily: {
         stylish: ['Whisper', 'cursive'],
-        newStyle:['Pacifico', 'cursive']
+        newStyle:['Pacifico', 'cursive'],
+        Roboto:['Roboto', 'sans-serif'],
+        RobotoCond:['Roboto Condensed', 'cursive'],
+        futura: ['fatura', 'cursive'],
+        faturaLight: ['fatura-light', 'cursive'],
+        faturaLight2: ['fatura-light2', 'cursive'],
+        faturaBold: ['fatura-bold', 'cursive'],
       },
       gridTemplateRows: {
         '[auto,auto,1fr]': 'auto auto 1fr',
@@ -18,5 +24,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms'), require("daisyui")],
 };

@@ -30,6 +30,7 @@ import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
 import AdminProductFormPage from "./Pages/AdminProductFormPage";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
 import StripeCheckout from "./Pages/StripeCheckout";
+import CheckoutPage from "./Pages/CheckoutPage";
 
 // TO RUN THIS APP
 // npm run start
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
     path: "/checkout",
     element: (
       <Protected>
-        <Checkout></Checkout>,
+        <CheckoutPage></CheckoutPage>,
       </Protected>
     ),
   },

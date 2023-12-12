@@ -19,7 +19,7 @@ const AdminOrdersPage = () => {
     <div>
       <Navbar>
         {showPopup && (
-          <div className="bg-white text-xs text-gray-700 p-2 absolute top-15 left-52 z-50 rounded shadow animate-bounce">
+          <div className="hidden sm:flex bg-white text-xs text-gray-700 p-2 absolute top-15 left-52 z-50 rounded shadow animate-bounce">
             <ArrowDownIcon className="w-5 inline" />
             You can sort by clicking on this
           </div>

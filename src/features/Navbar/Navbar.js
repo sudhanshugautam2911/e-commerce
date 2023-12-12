@@ -10,8 +10,6 @@ import { useSelector } from "react-redux";
 import { selectItems } from "../Cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
 
-
-
 const userNavigation = [
   { name: "My Profile", link: "/profile" },
   { name: "My Orders", link: "/my-orders" },
@@ -27,12 +25,26 @@ function Navbar({ children }) {
   const userInfo = useSelector(selectUserInfo);
   const [activeNavItem, setActiveNavItem] = useState("");
 
-  const navigation = useMemo(() => [
-  
-    { name: "Products", link: "#", user: true },
-    { name: "Manage Products", link: "/admin", admin: true, current: activeNavItem === "Manage Products" },
-    { name: "All Orders", link: "/admin/orders", admin: true, current: activeNavItem === "All Orders" },
-  ], [activeNavItem]);
+  // console.log("userinfo ", userInfo.role);
+
+  const navigation = useMemo(
+    () => [
+      { name: "Products", link: "#", user: true },
+      {
+        name: "Manage Products",
+        link: "/admin",
+        admin: true,
+        current: activeNavItem === "Manage Products",
+      },
+      {
+        name: "All Orders",
+        link: "/admin/orders",
+        admin: true,
+        current: activeNavItem === "All Orders",
+      },
+    ],
+    [activeNavItem]
+  );
 
   useEffect(() => {
     const pathname = window.location.pathname;
@@ -42,11 +54,26 @@ function Navbar({ children }) {
     }
   }, [navigation]);
 
-
   return (
     <>
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-white">
+        {userInfo ? (
+          userInfo.role === "admin" ? (
+            <div className="flex bg-red-500 justify-center space-x-5">
+              <h1 className="text-white text-base font-medium p-2">
+                Access Granted: Admin Privileges Activated
+              </h1>
+            </div>
+          ) : null
+        ) : null}
+        <Disclosure
+          as="nav"
+          className="bg-white"
+          style={{
+            boxShadow:
+              "0px 1px 0px rgba(27, 31, 35, 0.04), 0px 1px 0px rgba(255, 255, 255, 0.25) inset",
+          }}
+        >
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -59,12 +86,12 @@ function Navbar({ children }) {
                           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                           alt="Your Company"
                         />
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-700">
+                        <h1 className="text-2xl items-center flex justify-center font-faturaLight  text-gray-700 uppercase">
                           SimpleMart
                         </h1>
                       </Link>
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden md:block ml-64">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) =>
                           item[userInfo?.role] ? (
@@ -74,8 +101,8 @@ function Navbar({ children }) {
                               className={classNames(
                                 item.current
                                   ? "text-black border-b-2 border-PrimaryColor"
-                                  : "text-gray-600 border-b-2 border-transparent hover:border-b-2 hover:border-PrimaryColor",
-                                "px-3 py-2 text-base font-medium"
+                                  : "text-gray-700 border-b-2 border-transparent hover:border-b-2 hover:border-PrimaryColor",
+                                "px-3 py-2 text-base font-normal  "
                               )}
                               aria-current={item.current ? "page" : undefined}
                             >
@@ -251,9 +278,7 @@ function Navbar({ children }) {
           </div>
         </header> */}
         <main>
-          <div>
-            {children}
-          </div>
+          <div>{children}</div>
         </main>
       </div>
     </>

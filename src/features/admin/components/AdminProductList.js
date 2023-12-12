@@ -122,7 +122,7 @@ export default function AdminProductList() {
   return (
     <div>
       <div>
-        <div className="bg-white mx-auto  min-w-full max-w-full py-6 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div className="bg-white mx-auto  max-w-7xl py-6 sm:px-6 lg:px-8 flex items-center justify-center">
           <div>
             {/* Mobile filter dialog */}
             <MobileFilter
@@ -134,8 +134,8 @@ export default function AdminProductList() {
 
             {/* Laptop screens, max-w-7xl */}
             <main className="mx-auto px-4 sm:px-6 lg:px-8 ">
-              <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-                <h1 className="text-4xl font-newStyle text-gray-700 ">
+              <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-4">
+                <h1 className="text-3xl font-faturaLight text-gray-700 ">
                   Your Products
                 </h1>
 
@@ -225,7 +225,7 @@ export default function AdminProductList() {
                       <Link to="/admin/product-form">
                         <button
                           // type="submit"
-                          className="rounded-md bg-green-500 px-3 py-2 mx-8 my-3 text-sm font-mono text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-400 focus:ring-opacity-50"
+                          className="rounded-md bg-green-500 px-3 py-2 mx-8 my-3 text-sm font-fatura text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-400 focus:ring-opacity-50"
                         >
                           Add New Product
                         </button>
@@ -487,10 +487,10 @@ function ProductGrid({ products }) {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">
-                          ${discountPrice(product)}
+                        ₹{discountPrice(product)}
                         </p>
                         <p className="text-sm line-through  font-medium text-gray-400">
-                          ${product.price}
+                        ₹{product.price}
                         </p>
                       </div>
                     </div>
@@ -500,7 +500,7 @@ function ProductGrid({ products }) {
                   <Link
                     to={`/admin/product-form/edit/${product.id}`}
                     type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 my-3 text-sm font-mono text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all duration-300"
+                    className="rounded-md bg-indigo-600 px-3 py-2 my-3 text-sm font-faturaLight text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all duration-300"
                   >
                     Edit Product
                   </Link>

@@ -50,7 +50,10 @@ export default function UserProfile() {
   };
 
   const handleAdd = (address) => {
-    const newUser = { ...userInfo, addresses: [...userInfo.addresses, address] }; // for shallow copy issue , addresses: [...user.addresses, address] -> pushing address as new
+    const newUser = {
+      ...userInfo,
+      addresses: [...userInfo.addresses, address],
+    }; // for shallow copy issue , addresses: [...user.addresses, address] -> pushing address as new
     dispatch(updateUserAsync(newUser));
     setShowAddAddress(false);
   };
@@ -65,19 +68,21 @@ export default function UserProfile() {
     setValue("city", null);
     setValue("state", null);
     setValue("pinCode", null);
-
-
   };
 
   return (
     <div>
       <div className="mx-auto sm:px-6 lg:px-8 max-w-screen-xl">
         <div className="bg-white px-4 py-3 my-6 rounded-md">
-          <h1 className="text-3xl  flex font-bold  text-gray-900">
+          <h1 className="text-4xl text-PrimaryColor font-mono my-3 ">
+            My Profile
+          </h1>
+
+          <h1 className="text-md flex font-Roboto  text-gray-600">
             Name: {userInfo.name ? userInfo.name : "New User"}
           </h1>
-          <h3 className="text-lg mt-2 mb-4 flex font-semibold  text-red-900">
-            email address : {userInfo.email}
+          <h3 className="text-sm mt-1 mb-3 flex font-Roboto  text-red-900">
+            Email address : {userInfo.email}
           </h3>
           <div className="px-4 py-6 sm:px-6 "></div>
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

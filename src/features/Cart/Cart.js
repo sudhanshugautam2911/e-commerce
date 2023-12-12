@@ -68,7 +68,7 @@ export default function Cart() {
   };
 
   return (
-    <>  
+    <>
       {!items.length && cartLoaded && (
         <Navigate to="/" replace={true}></Navigate>
       )}
@@ -76,7 +76,9 @@ export default function Cart() {
       {/* max-w-7xl , bg-white */}
       <div className="mx-auto bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">
         <h1 className="text-xs my-10 flex justify-center font-bold  text-TextColor">
-          <span className="text-[#4F46E5] mr-2">MY BAG</span>  - - - - - - - - - - - - - <span className="mx-2">ADDRESS</span> - - - - - - - - - - - - - <span className="ml-2">PAYMENT</span>
+          <span className="text-[#4F46E5] mr-2">MY BAG</span> - - - - - - - - -
+          - - - - <span className="mx-2">ADDRESS</span> - - - - - - - - - - - -
+          - <span className="ml-2">PAYMENT</span>
         </h1>
         <div className="border-b border-gray-200 px-4 py-6 sm:px-6 ">
           <div className="flow-root ">
@@ -101,9 +103,11 @@ export default function Cart() {
                     <div>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <h3>
-                          <a href={item.product.id}>{item.product.title}</a>
+                          <Link to={`/product-detail/${item.product.id}`}>
+                            {item.product.title}
+                          </Link>
                         </h3>
-                        <p className="ml-4">${discountPrice(item.product)}</p>
+                        <p className="ml-4">₹{discountPrice(item.product)}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
                         {item.product.brand}
@@ -139,11 +143,13 @@ export default function Cart() {
                           dangertOption="Delete"
                           cancelOption="Cancel"
                           dangerAction={(e) => handleDelete(e, item.id)}
-                          cancelAction={()=> setOpenModal(null)}
+                          cancelAction={() => setOpenModal(null)}
                           showModal={openModal === item.id}
                         ></Modal>
                         <button
-                          onClick={e => {setOpenModal(item.id)}}
+                          onClick={(e) => {
+                            setOpenModal(item.id);
+                          }}
                           type="button"
                           className="font-medium text-indigo-600 hover:text-indigo-500"
                         >
@@ -165,7 +171,7 @@ export default function Cart() {
           </div>
           <div className="flex justify-between text-TextColor font-bold">
             <p>Total Amount</p>
-            <p>${totalAmount}</p>
+            <p>₹{totalAmount}</p>
           </div>
           <p className="mt-0.5 text-sm text-TextColor">
             Shipping and taxes calculated at checkout.

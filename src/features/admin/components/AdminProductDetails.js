@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProductByIdAsync,
   selectProductById,
+  selectProductListStatus,
 } from "../../product/productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../Cart/cartSlice";
 import { discountPrice } from "../../../app/constants";
+import { HashLoader } from "react-spinners";
 
 // TODO : In server we will add colors, sizes and highlight to each product
 const colors = [
@@ -38,6 +40,7 @@ export default function AdminProductDetails() {
   const dispatch = useDispatch();
   // react routing feature
   const params = useParams();
+  const status = useSelector(selectProductListStatus);
 
   const newItem = {...product, quantity:1};
   delete newItem['id'];
@@ -55,6 +58,12 @@ export default function AdminProductDetails() {
 
   return (
     <div className="bg-white">
+      {/* spinner */}
+      {status === "loading" && (
+        <div className="flex items-center justify-center w-full h-full">
+          <HashLoader color="#4F46E5" />
+        </div>
+      )}
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
@@ -143,10 +152,10 @@ export default function AdminProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl line-through tracking-tight text-gray-900">
-                ${product.price}
+              ₹{product.price}
               </p>
               <p className="text-3xl tracking-tight text-gray-900">
-                ${discountPrice(product)}
+              ₹{discountPrice(product)}
               </p>
 
               {/* Reviews */}

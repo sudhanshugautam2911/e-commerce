@@ -81,20 +81,22 @@ const Checkout = () => {
     <>
       {!items.length && <Navigate to="/" replace={true}></Navigate>}
 
-      {currentOrder && currentOrder.paymentMethod === 'cash' && (
+      {currentOrder && currentOrder.paymentMethod === "cash" && (
         <Navigate
           to={`/order-success/${currentOrder.id}`}
           replace={true}
         ></Navigate>
       )}
-      {currentOrder && currentOrder.paymentMethod === 'card' && (
-        <Navigate
-          to={`/stripe-checkout/`}
-          replace={true}
-        ></Navigate>
+      {currentOrder && currentOrder.paymentMethod === "card" && (
+        <Navigate to={`/stripe-checkout/`} replace={true}></Navigate>
       )}
-   
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-7">
+        <h1 className="text-xs mt-8 flex justify-center font-bold  text-TextColor">
+          <span className=" mr-2">MY BAG</span> - - - - - - - - - - - - -{" "}
+          <span className="mx-2 text-[#4F46E5]">ADDRESS</span> - - - - - - - - -
+          - - - - <span className="ml-2">PAYMENT</span>
+        </h1>
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-7    ">
           <div className="lg:col-span-4">
             {/* <----  FORM START HERE  ----> */}
@@ -111,11 +113,11 @@ const Checkout = () => {
                 );
                 reset();
               })}
-              className=" bg-white shadow-sm ring-1 ring-inset ring-gray-300 rounded-md px-5 py-5 mt-12"
+              className=" bg-white shadow-sm ring-1 ring-inset ring-gray-300 rounded-md px-5 py-5 mt-10"
             >
               <div className="space-y-12 ">
                 <div className="border-b border-gray-900/10 pb-12">
-                  <h2 className="text-3xl my-5 font-bold flex text-PrimaryColor">
+                  <h2 className="text-4xl my-5 font-faturaLight  flex text-gray-700">
                     Personal Information
                   </h2>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -377,8 +379,8 @@ const Checkout = () => {
           {/* Cart summary - same to same cart copied */}
 
           <div className="lg:col-span-3 ">
-            <div className="mx-auto mt-12 bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md shadow-sm ring-1 ring-inset ring-gray-300 rounded-md">
-              <h1 className="text-xl my-5 font-medium flex text-gray-900">
+            <div className="mx-auto mt-10 bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md shadow-sm ring-1 ring-inset ring-gray-300 rounded-md">
+              <h1 className="text-2xl my-5 font-faturaLight flex text-gray-700">
                 Order Summary
               </h1>
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
@@ -398,12 +400,12 @@ const Checkout = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.product.id}>
+                                <Link to={`/product-detail/${item.product.id}`}>
                                   {item.product.title}
-                                </a>
+                                </Link>
                               </h3>
                               <p className="ml-4">
-                                ${discountPrice(item.product)}
+                                ₹ {discountPrice(item.product)}
                               </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
@@ -457,7 +459,7 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between font-bold text-TextColor">
                   <p>Total Amount</p>
-                  <p>${totalAmount}</p>
+                  <p>₹{totalAmount}</p>
                 </div>
                 <p className="mt-0.5 text-sm text-TextColor">
                   Shipping and taxes calculated at checkout.

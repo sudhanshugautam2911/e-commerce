@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByIdAsync, selectProductById, selectProductListStatus } from "../productSlice";
+import {
+  fetchProductByIdAsync,
+  selectProductById,
+  selectProductListStatus,
+} from "../productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import { discountPrice } from "../../../app/constants";
@@ -86,7 +90,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 export default function ProductDetails() {
   const product = useSelector(selectProductById);
   const [selectedColor, setSelectedColor] = useState();
@@ -95,7 +98,7 @@ export default function ProductDetails() {
   // react routing feature
   const params = useParams();
   const items = useSelector(selectItems);
-  const status = useSelector(selectProductListStatus)
+  const status = useSelector(selectProductListStatus);
 
   // backend will automatically an Id
 
@@ -119,11 +122,11 @@ export default function ProductDetails() {
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div className="bg-white">
       {/* spinner */}
@@ -186,14 +189,14 @@ export default function ProductDetails() {
             <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
               <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                 <img
-                  src={product.images[0]}
+                  src={product.images[1]}
                   alt={product.title}
                   className="h-full w-full object-cover object-center"
                 />
               </div>
               <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
                 <img
-                  src={product.images[0]}
+                  src={product.images[2]}
                   alt={product.title}
                   className="h-full w-full object-cover object-center"
                 />
@@ -201,7 +204,7 @@ export default function ProductDetails() {
             </div>
             <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
               <img
-                src={product.images[0]}
+                src={product.images[3]}
                 alt={product.title}
                 className="h-full w-full object-cover object-center"
               />
@@ -220,7 +223,7 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                ${discountPrice(product)}
+              ₹{discountPrice(product)}
               </p>
 
               {/* Reviews */}
@@ -241,7 +244,7 @@ export default function ProductDetails() {
                       />
                     ))}
                   </div>
-                  <p className="sr-onl  y">{product.rating} out of 5 stars</p>
+                  <p className="sr-only">{product.rating} out of 5 stars</p>
                   {/* Total Reviews - hidden for now */}
                   {/* <a href={reviews.href} className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                   {reviews.totalCount} reviews
@@ -385,7 +388,7 @@ export default function ProductDetails() {
 
             <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
               {/* Description and details */}
-              <div>
+              {/* <div>
                 <h3 className="sr-only">Description</h3>
 
                 <div className="space-y-6">
@@ -393,13 +396,14 @@ export default function ProductDetails() {
                     {product.description}
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">
-                  Highlights
-                </h3>
-
+                {product.highlights.length > 1 ? (
+                  <h3 className="text-sm font-medium text-gray-900">
+                    Highlights
+                  </h3>
+                ) : null}
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
                     {product.highlights &&
@@ -415,8 +419,10 @@ export default function ProductDetails() {
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
-                <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{product.description}</p>
+                <div className="mt-4 space-y-6 text-gray-500 text-base">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: product.description }}
+                  ></div>
                 </div>
               </div>
             </div>

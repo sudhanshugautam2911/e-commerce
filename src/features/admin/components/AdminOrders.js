@@ -74,7 +74,7 @@ function AdminOrders() {
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th
-                      className="py-3 px-6 text-left cursor-pointer select-none"
+                      className="py-3 px-6 text-left font-faturaLight cursor-pointer select-none"
                       onClick={(e) =>
                         handleSort({
                           sort: "id",
@@ -90,11 +90,11 @@ function AdminOrders() {
                           <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
                         ))}
                     </th>
-                    <th className="py-3 px-6 text-left cursor-pointer select-none">
+                    <th className="py-3 px-6 text-left font-faturaLight cursor-pointer select-none">
                       Items
                     </th>
                     <th
-                      className="py-3 px-6 text-left cursor-pointer select-none"
+                      className="py-3 px-6 text-left font-faturaLight cursor-pointer select-none"
                       onClick={(e) =>
                         handleSort({
                           sort: "totalAmount",
@@ -110,13 +110,13 @@ function AdminOrders() {
                           <ArrowDownIcon className="w-4 h-4 inline"></ArrowDownIcon>
                         ))}
                     </th>
-                    <th className="py-3 px-6 text-center cursor-pointer select-none">
+                    <th className="py-3 px-6 text-center font-faturaLight cursor-pointer select-none">
                       Shipping Address
                     </th>
-                    <th className="py-3 px-6 text-center cursor-pointer select-none">
+                    <th className="py-3 px-6 text-center font-faturaLight cursor-pointer select-none">
                       Status
                     </th>
-                    <th className="py-3 px-6 text-center cursor-pointer select-none">
+                    <th className="py-3 px-6 text-center font-faturaLight cursor-pointer select-none">
                       Actions
                     </th>
                   </tr>
@@ -144,7 +144,7 @@ function AdminOrders() {
                               {item.product.title.length > 18 ? (
                                 <>
                                   {item.product.title.slice(0, 10)}... - #
-                                  {item.quantity} - $
+                                  {item.quantity} - ₹
                                   {discountPrice(item.product)}
                                 </>
                               ) : (
@@ -159,7 +159,7 @@ function AdminOrders() {
                       </td>
                       <td className="py-3 px-6 text-center">
                         <div className="flex items-center justify-center text-sm font-medium">
-                          ${order.totalAmount}
+                        ₹{order.totalAmount}
                         </div>
                       </td>
                       <td className="py-3 px-6 text-center">
