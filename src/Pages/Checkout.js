@@ -37,7 +37,7 @@ const Checkout = () => {
     (amount, item) => discountPrice(item.product) * item.quantity + amount,
     0
   );
-  console.log("items ", items)
+  console.log("items ", items);
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const [selectedAddresses, setselectedAddresses] = useState(null);
   const [paymentMethod, setpaymentMethod] = useState("cash");
@@ -413,9 +413,12 @@ const Checkout = () => {
                             <p className="mt-1 text-sm text-gray-500">
                               {item.color}
                             </p>
+                            
                           </div>
+                            
                           <div className="flex flex-1 items-end justify-between text-sm">
-                            <div className="text-gray-500">
+                            <div className="text-gray-500 ">
+                              
                               <label
                                 htmlFor="Quantity"
                                 className="inline leading-6 mr-1 text-gray-500"
@@ -435,6 +438,9 @@ const Checkout = () => {
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                               </select>
+                              <p className="mx-2 inline text-sm text-gray-500">
+                              {" "} Size: {item.size} 
+                            </p>
                             </div>
 
                             <div className="flex">

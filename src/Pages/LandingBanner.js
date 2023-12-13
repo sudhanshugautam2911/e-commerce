@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
@@ -35,6 +35,16 @@ const LandingBanner = () => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const isLastSlide = currentIndex === slides.length - 1; // true false
+      const newIndex = isLastSlide ? 0 : currentIndex + 1;
+      setCurrentIndex(newIndex);
+    }, 4000); // Change slide every 3 seconds
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(timer);
+  }, [currentIndex, slides.length]);
 
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);

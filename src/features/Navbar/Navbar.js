@@ -102,7 +102,7 @@ function Navbar({ children }) {
                         <img
                           className="h-8 w-8"
                           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                          alt="Your Company"
+                          alt="Simplemart"
                         />
                         <h1 className="text-2xl items-center flex justify-center font-faturaLight  text-gray-700 uppercase">
                           SimpleMart
@@ -296,7 +296,7 @@ function Navbar({ children }) {
           </div>
         </header> */}
         <main>
-          <div>{children}</div>
+          {children}
         </main>
       </div>
     </>

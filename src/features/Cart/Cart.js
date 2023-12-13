@@ -15,8 +15,6 @@ import { discountPrice } from "../../app/constants";
 import HashLoader from "react-spinners/HashLoader";
 import Modal from "../common/Modal";
 
-
-
 // My latest code
 export default function Cart() {
   const [openModal, setOpenModal] = useState(null);
@@ -39,7 +37,7 @@ export default function Cart() {
   };
   const handleSize = (e, item) => {
     // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
-    console.log("size changed to : ", e.target.value)
+    console.log("size changed to : ", e.target.value);
     disptach(updateCartAsync({ id: item.id, size: e.target.value }));
   };
   const handleDelete = (e, id) => {
@@ -91,34 +89,38 @@ export default function Cart() {
                       <p className="mt-1 text-sm text-gray-500">
                         {item.product.brand}
                       </p>
-                      {
+                      <p className="mt-1 text-sm text-gray-500">{item.color}</p>
+                      {/* {
                         item.color && (
                           <div className="mt-6">
                             <label htmlFor="color" className="inline leading-6 mr-1 text-gray-500">Color :</label>
                             <h1 className="inline leading-6 mr-1 text-gray-500">{item.color}</h1>
                           </div>
                         )
-                      }
+                      } */}
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
                       {item.size && (
                         <div>
-                          <label htmlFor="size" className="inline leading-6 mr-1 text-gray-500">
+                          <label
+                            htmlFor="size"
+                            className="inline leading-6 mr-1 text-gray-500"
+                          >
                             Size
                           </label>
                           <select
-                          className="rounded-md text-xs"
-                          onChange={(e) => handleSize(e, item)}
-                          value={item.size}
-                        >
-                          <option value="XS">XS</option>
-                          <option value="S">S</option>
-                          <option value="M">M</option>
-                          <option value="L">L</option>
-                          <option value="XL">XL</option>
-                          <option value="2XL">2XL</option>
-                          <option value="3XL">3XL</option>
-                        </select>
+                            className="rounded-md text-xs text-gray-500"
+                            onChange={(e) => handleSize(e, item)}
+                            value={item.size}
+                          >
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="2XL">2XL</option>
+                            <option value="3XL">3XL</option>
+                          </select>
                         </div>
                       )}
                       <div className="text-gray-500">
