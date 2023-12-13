@@ -70,6 +70,22 @@ export default function UserOrders() {
                           </p>
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
+                          {item.size && (
+                            <label
+                              htmlFor="Quantity"
+                              className="inline leading-6 mr-1 text-gray-500"
+                            >
+                              Size : {item.size}
+                            </label>
+                          )}
+                          {item.color && (
+                            <label
+                              htmlFor="Quantity"
+                              className="inline leading-6 mr-1 text-gray-500"
+                            >
+                              Color : {item.color}
+                            </label>
+                          )}
                           <div className="text-gray-500">
                             <label
                               htmlFor="Quantity"
@@ -78,7 +94,6 @@ export default function UserOrders() {
                               Qty : {item.quantity}
                             </label>
                           </div>
-
                           <div className="flex"></div>
                         </div>
                       </div>
@@ -90,14 +105,14 @@ export default function UserOrders() {
             <h1 className="text-sm  sm:hidden font-Roboto  text-gray-600">
               Order #{order.id.substring(0, 12) + "..."}
             </h1>
-            <h1 className="text-sm  max-sm:hidden font-Roboto  text-gray-500">
+            <h1 className="text-sm  max-sm:hidden font-Roboto  text-gray-600">
               Order #{order.id}
             </h1>
             {/* <h3 className="text-lg mt-2 mb-4 flex font-RobotoCond  text-red-900">
               Order Status : {order.status}
             </h3> */}
             <div className="my-2 mb-5">
-              <span className="text-base font-RobotoCond">Order Status : </span>
+              <span className="text-base font-RobotoCond text-gray-500">Order Status : </span>
               <span
                 className={`${chooseColor(
                   order.status

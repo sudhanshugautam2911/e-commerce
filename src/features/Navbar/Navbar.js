@@ -24,12 +24,12 @@ function Navbar({ children }) {
   const items = useSelector(selectItems);
   const userInfo = useSelector(selectUserInfo);
   const [activeNavItem, setActiveNavItem] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // console.log("userinfo ", userInfo.role);
 
   const navigation = useMemo(
     () => [
-      { name: "Products", link: "#", user: true },
       {
         name: "Manage Products",
         link: "/admin",
@@ -54,6 +54,22 @@ function Navbar({ children }) {
     }
   }, [navigation]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 0);
+    };
+  
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+  
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Empty dependency array means this effect runs once after the initial render
+  
+
   return (
     <>
       <div className="min-h-full">
@@ -68,7 +84,9 @@ function Navbar({ children }) {
         ) : null}
         <Disclosure
           as="nav"
-          className="bg-white"
+          className={`${
+            isScrolled ? 'fixed top-0 w-full bg-white shadow-lg z-50' : 'relative' 
+          }`}
           style={{
             boxShadow:
               "0px 1px 0px rgba(27, 31, 35, 0.04), 0px 1px 0px rgba(255, 255, 255, 0.25) inset",

@@ -15,6 +15,7 @@ import {
 } from "../features/order/orderSlice";
 import { discountPrice } from "../app/constants";
 import { selectUserInfo } from "../features/user/userSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const Checkout = () => {
   const [open, setOpen] = useState(true);
@@ -36,6 +37,7 @@ const Checkout = () => {
     (amount, item) => discountPrice(item.product) * item.quantity + amount,
     0
   );
+  console.log("items ", items)
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
   const [selectedAddresses, setselectedAddresses] = useState(null);
   const [paymentMethod, setpaymentMethod] = useState("cash");
@@ -64,12 +66,12 @@ const Checkout = () => {
         user: user.id,
         paymentMethod,
         selectedAddresses,
-        status: "pending", // order state -> delivered, recived etc
+        status: "pending", // order status -> delivered, recived etc
       };
       disptach(createOrderAsync(order));
     } else {
       // TODO: we can use proper messaging popup here
-      alert("Enter Address and Payment method");
+      toast.error("Enter Address and Payment method");
     }
 
     // TODO: redirect to order-success page
@@ -492,6 +494,18 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };

@@ -71,6 +71,13 @@ export default function ProductForm() {
     }, 3000);
   };
 
+  const handlesave = () => {
+    toast.success("Product saved");
+    setTimeout(() => {
+      navigate("/admin");
+    }, 1200);
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -559,6 +566,7 @@ export default function ProductForm() {
           )}
           <button
             type="submit"
+            onClick={handlesave}
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Save

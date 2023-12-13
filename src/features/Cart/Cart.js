@@ -15,33 +15,7 @@ import { discountPrice } from "../../app/constants";
 import HashLoader from "react-spinners/HashLoader";
 import Modal from "../common/Modal";
 
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
+
 
 // My latest code
 export default function Cart() {
@@ -62,6 +36,11 @@ export default function Cart() {
   const handleQuantity = (e, item) => {
     // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
     disptach(updateCartAsync({ id: item.id, quantity: +e.target.value }));
+  };
+  const handleSize = (e, item) => {
+    // + mark used because value string mei ayega so usko integer mei convert kr rhe hai
+    console.log("size changed to : ", e.target.value)
+    disptach(updateCartAsync({ id: item.id, size: e.target.value }));
   };
   const handleDelete = (e, id) => {
     disptach(deleteCartItemAsync(id));
@@ -112,8 +91,36 @@ export default function Cart() {
                       <p className="mt-1 text-sm text-gray-500">
                         {item.product.brand}
                       </p>
+                      {
+                        item.color && (
+                          <div className="mt-6">
+                            <label htmlFor="color" className="inline leading-6 mr-1 text-gray-500">Color :</label>
+                            <h1 className="inline leading-6 mr-1 text-gray-500">{item.color}</h1>
+                          </div>
+                        )
+                      }
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
+                      {item.size && (
+                        <div>
+                          <label htmlFor="size" className="inline leading-6 mr-1 text-gray-500">
+                            Size
+                          </label>
+                          <select
+                          className="rounded-md text-xs"
+                          onChange={(e) => handleSize(e, item)}
+                          value={item.size}
+                        >
+                          <option value="XS">XS</option>
+                          <option value="S">S</option>
+                          <option value="M">M</option>
+                          <option value="L">L</option>
+                          <option value="XL">XL</option>
+                          <option value="2XL">2XL</option>
+                          <option value="3XL">3XL</option>
+                        </select>
+                        </div>
+                      )}
                       <div className="text-gray-500">
                         <label
                           htmlFor="Quantity"
