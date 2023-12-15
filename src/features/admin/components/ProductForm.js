@@ -41,7 +41,6 @@ export default function ProductForm() {
   }, [params.id, dispatch]);
 
   const selectedProduct = useSelector(selectProductById);
-  console.log("selectedProduct ", selectedProduct);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,6 +58,7 @@ export default function ProductForm() {
       setValue("image2", selectedProduct.images[1]);
       setValue("image3", selectedProduct.images[2]);
     }
+
   }, [selectedProduct, params.id, setValue]);
 
   const handleDelete = () => {
@@ -82,6 +82,22 @@ export default function ProductForm() {
     window.scrollTo(0, 0);
   }, []);
 
+  const colors = [
+    { name: "White", class: "bg-white", selectedClass: "ring-gray-400", id:"white" },
+    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400", id:"gray" },
+    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900", id:"black" },
+  ];
+  const sizes = [
+    { name: "XXS", inStock: true, id: "xxs" },
+    { name: "XS", inStock: true, id: "xs" },
+    { name: "S", inStock: true, id: "s" },
+    { name: "M", inStock: true, id: "m" },
+    { name: "L", inStock: true , id: "l"},
+    { name: "XL", inStock: true , id: "xl"},
+    { name: "2XL", inStock: true, id: "2xl" },
+    { name: "3XL", inStock: true, id: "3xl" },
+  ];
+
   return (
     <div className="flex justify-center items-center">
       <div className="max-w-7xl">
@@ -89,6 +105,9 @@ export default function ProductForm() {
           noValidate
           className="p-4 sm:p-8 bg-gray-100 rounded-md "
           onSubmit={handleSubmit((data) => {
+
+            console.log("Form saved data is : " ,data);
+
             const product = { ...data };
             product.images = [
               product.image1,
@@ -97,6 +116,11 @@ export default function ProductForm() {
               product.thumbnail,
             ];
             product.rating = 0;
+
+            product.colors = product.colors.map(color=> colors.find(clr=>clr.id===color));
+            product.sizes = product.sizes.map(size=> sizes.find(sz=>sz.id===size));
+            console.log("Form color data is : " ,product);
+            
             delete product.image1;
             delete product.image2;
             delete product.image3;
@@ -213,6 +237,50 @@ export default function ProductForm() {
                         </option>
                       ))}
                     </select>
+                  </div>
+                </div>
+                <div className="col-span-3">
+                  <label
+                    htmlFor="colors"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Colors
+                  </label>
+                  <div className="mt-2 flex items-center flex-wrap">
+                    {colors.map((color) => (
+                      <div className="mr-2 space-x-2">
+                        <input
+                          type="checkbox"
+                          {...register("colors", {
+                          })}
+                          key={color.id}
+                          value={color.id}
+                        />
+                        <span>{color.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="col-span-3">
+                  <label
+                    htmlFor="sizes"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Sizes
+                  </label>
+                  <div className="mt-2 flex items-center flex-wrap">
+                    {sizes.map((size) => (
+                      <div className="mr-2 space-x-2">
+                        <input
+                          type="checkbox"
+                          {...register("sizes", {
+                          })}
+                          key={size.id}
+                          value={size.id}
+                        />
+                        <span>{size.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 

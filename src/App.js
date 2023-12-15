@@ -31,6 +31,7 @@ import AdminProductFormPage from "./Pages/AdminProductFormPage";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
 import StripeCheckout from "./Pages/StripeCheckout";
 import CheckoutPage from "./Pages/CheckoutPage";
+import ResetPasswordPage from "./Pages/ResetPasswordPage";
 
 // TO RUN THIS APP
 // npm run start
@@ -161,6 +162,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage></ForgotPasswordPage>,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPasswordPage></ResetPasswordPage>,
   },
 ]);
 

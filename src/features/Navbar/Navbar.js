@@ -59,24 +59,23 @@ function Navbar({ children }) {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 0);
     };
-  
+
     // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
-  
+    window.addEventListener("scroll", handleScroll);
+
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []); // Empty dependency array means this effect runs once after the initial render
-  
 
   return (
     <>
       <div className="min-h-full">
         {userInfo ? (
           userInfo.role === "admin" ? (
-            <div className="flex bg-red-500 justify-center space-x-5">
-              <h1 className="text-white text-base font-medium p-2">
+            <div className="flex bg-[#970000] justify-center space-x-5">
+              <h1 className="text-white text-sm font-mono p-2 uppercase">
                 Access Granted: Admin Privileges Activated
               </h1>
             </div>
@@ -85,7 +84,9 @@ function Navbar({ children }) {
         <Disclosure
           as="nav"
           className={`${
-            isScrolled ? 'fixed top-0 w-full bg-white shadow-lg z-50' : 'relative' 
+            isScrolled
+              ? "fixed top-0 w-full bg-white shadow-lg z-50"
+              : "relative"
           }`}
           style={{
             boxShadow:
@@ -136,7 +137,7 @@ function Navbar({ children }) {
                       <Link to="/cart">
                         <button
                           type="button"
-                          className="rounded-full p-1 text-black hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          className="rounded-full p-1 text-black hover:text-gray-700 active:scale-90 duration-300 c"
                         >
                           <span className="sr-only">View Cart</span>
                           <ShoppingCartIcon
@@ -154,13 +155,27 @@ function Navbar({ children }) {
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
                         <div>
-                          <Menu.Button className="flex max-w-xs items-center rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                          <Menu.Button className="flex max-w-xs items-center rounded-full text-sm active:scale-90 duration-300">
                             <span className="sr-only">Open user menu</span>
-                            <img
+                            {/* <img
                               className="h-8 w-8 rounded-full"
                               src={userInfo?.imageUrl}
                               alt=""
-                            />
+                            /> */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-7 h-7"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                              />
+                            </svg>
                           </Menu.Button>
                         </div>
                         <Transition
@@ -295,9 +310,7 @@ function Navbar({ children }) {
             </h1>
           </div>
         </header> */}
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
       </div>
     </>
   );

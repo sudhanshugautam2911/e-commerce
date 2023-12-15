@@ -13,12 +13,14 @@ const LandingBanner = () => {
     {
       url: "https://prod-img.thesouledstore.com/public/theSoul/storage/mobile-cms-media-prod/banner-images/erb.jpg?format=webp&w=1500&dpr=1.3",
     },
-
-    {
-      url: "https://prod-img.thesouledstore.com/public/theSoul/storage/mobile-cms-media-prod/banner-images/StarWars-Sneakers_App-Banner_NEW_Homepage.jpg?format=webp&w=1500&dpr=1.3",
-    },
     {
       url: "https://prod-img.thesouledstore.com/public/theSoul/storage/mobile-cms-media-prod/banner-images/Homepage_ISRO.jpg?format=webp&w=1500&dpr=1.3",
+    },
+    {
+      url: "https://prod-img.thesouledstore.com/public/theSoul/storage/mobile-cms-media-prod/banner-images/webpsb_1.jpg?format=webp&w=1500&dpr=1.3",
+    },
+    {
+      url: "https://prod-img.thesouledstore.com/public/theSoul/storage/mobile-cms-media-prod/banner-images/Homepage-Banner_1_0mQHZzP.jpg?format=webp&w=1500&dpr=1.3",
     },
   ];
 
