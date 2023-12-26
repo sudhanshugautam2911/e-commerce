@@ -57,6 +57,8 @@ export default function ProductForm() {
       setValue("image1", selectedProduct.images[0]);
       setValue("image2", selectedProduct.images[1]);
       setValue("image3", selectedProduct.images[2]);
+      setValue("sizes", selectedProduct.sizes.map(size=> size.id))
+      setValue("colors", selectedProduct.colors.map(color=> color.id))
     }
 
   }, [selectedProduct, params.id, setValue]);

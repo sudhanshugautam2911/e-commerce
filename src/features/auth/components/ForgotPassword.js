@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  loginUserAsync,
   resetPasswordRequestAsync,
-  selectError,
   selectLoggedInUser,
   selectMailSent,
 } from "../authSlice";
@@ -17,7 +15,7 @@ export default function ForgotPassword() {
   const user = useSelector(selectLoggedInUser);
   const mailSent = useSelector(selectMailSent);
   const [isSendClick, setisSendClick] = useState(false);
-
+  const navigate = useNavigate();
   // const error = useSelector(selectError);
   // console.log("error issssssssss ", error)
 
@@ -31,16 +29,18 @@ export default function ForgotPassword() {
   console.log(errors);
 
   useEffect(() => {
-    if(mailSent) {
-      toast.success("Reset mail has sent")
+    if (mailSent) {
+      toast.success("Reset mail has sent");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     }
-  }, [mailSent])
-  
+  }, [mailSent]);
 
   return (
     <>
       {user && <Navigate to="/" replace={true}></Navigate>}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -83,7 +83,7 @@ export default function ForgotPassword() {
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors.email.message}</p>
-                )}  
+                )}
                 {/* {error && (
                   <p className="text-red-500">{error || error.message}</p>
                 )} */}
@@ -96,10 +96,7 @@ export default function ForgotPassword() {
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 {mailSent === false && isSendClick === true ? (
-                    <MoonLoader
-                    color="rgba(255, 255, 255, 1)"
-                    size={20}
-                  />
+                  <MoonLoader color="rgba(255, 255, 255, 1)" size={20} />
                 ) : (
                   "Send email"
                 )}
@@ -120,8 +117,8 @@ export default function ForgotPassword() {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
+        autoClose={3000}
+        hideProgressBar={true}
         newestOnTop={false}
         closeOnClick
         rtl={false}
