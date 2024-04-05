@@ -46,9 +46,9 @@ const router = createBrowserRouter([
     path: "/",
 
     element: (
-      <Protected>
+      // <Protected>
         <Home></Home>
-      </Protected>
+      // </Protected>
     ),
   },
   {
@@ -86,9 +86,9 @@ const router = createBrowserRouter([
   {
     path: "/product-detail/:id",
     element: (
-      <Protected>
+      // <Protected>
         <ProductDetailPage></ProductDetailPage>
-      </Protected>
+      // </Protected>
     ),
   },
   {
@@ -179,6 +179,7 @@ function App() {
   }, [dispatch]);
   
   useEffect(() => {
+    console.log("user is ", user, " ", userChecked);
     if (user && userChecked) {
       dispatch(fetchItemsByUserIdAsync());
       // if we can get req.user by token on backend no need to give in fron-end

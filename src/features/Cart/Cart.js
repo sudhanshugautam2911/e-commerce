@@ -57,9 +57,14 @@ export default function Cart() {
       {/* max-w-7xl , bg-white */}
       { (items.length > 0) ? (
         <div className="mx-auto bg-white py-2 px-4 sm:px-6 lg:px-8 max-w-screen-md">
-          <h1 className="text-xs my-10 flex justify-center font-bold  text-TextColor">
+          <h1 className="text-xs my-10 flex justify-center font-bold  text-TextColor max-md:hidden">
             <span className="text-[#4F46E5] mr-2">MY BAG</span> - - - - - - - -
             - - - - - <span className="mx-2">ADDRESS</span> - - - - - - - - - -
+            - - - <span className="ml-2">PAYMENT</span>
+          </h1>
+          <h1 className="text-xs my-10 flex justify-center font-bold  text-TextColor md:hidden">
+            <span className="text-[#4F46E5] mr-2">MY BAG</span> - - -
+            - - - <span className="mx-2">ADDRESS</span> - - -
             - - - <span className="ml-2">PAYMENT</span>
           </h1>
           <div className="border-b border-gray-200 px-4 py-6 sm:px-6 ">

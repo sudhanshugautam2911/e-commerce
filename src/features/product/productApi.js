@@ -85,6 +85,7 @@ export function fetchAllProductByFilter(filter, sort, pagination, admin) {
       "/products?" + queryString
     );
     const data = await response.json();
+    // console.log("Q is ",queryString , " and data is ", data );
     // it is a feature of api we are using
     const totalItems = await response.headers.get("X-Total-Count");
     resolve({ data: { products: data, totalItems: +totalItems } });

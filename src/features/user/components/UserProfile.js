@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
+import { MdEdit } from "react-icons/md";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function UserProfile() {
   const userInfo = useSelector(selectUserInfo);
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddAddress, setShowAddAddress] = useState(false);
+  // console.log("is ", userInfo.addresses[0])
 
   // we will add payment section when we work on backend
 
@@ -70,22 +72,87 @@ export default function UserProfile() {
     setValue("pinCode", null);
   };
 
+  const [inputValue, setInputValue] = useState(
+    userInfo.name ? userInfo.name : "Unknown"
+  );
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+  const handleButtonClick = () => {
+    const updateUser = { ...userInfo, name: inputValue };
+    console.log("updateUser ", updateUser);
+    dispatch(updateUserAsync(updateUser));
+    setInputOpen(false);
+  };
+  const [inputOpen, setInputOpen] = useState(false);
+
+  const handleEditName = () => {
+    setInputOpen(true);
+  };
+
   return (
     <div>
       <div className="mx-auto sm:px-6 lg:px-8 max-w-screen-xl">
         <div className="bg-white px-4 py-3 my-6 rounded-md">
-          <h1 className="text-4xl text-PrimaryColor font-mono my-3 ">
+          <h1 className="text-4xl text-sky-500 font-medium flex justify-center items-center my-3 ">
             My Profile
           </h1>
 
-          <h1 className="text-md flex font-Roboto  text-gray-600">
-            Name: {userInfo.name ? userInfo.name : "New User"}
-          </h1>
-          <h3 className="text-sm mt-1 mb-3 flex font-Roboto  text-red-900">
-            Email address : {userInfo.email}
-          </h3>
-          <div className="px-4 py-6 sm:px-6 "></div>
-          <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+          {/* Name and edit name */}
+          <div className="border-b border-gray-200  mt-8">
+            <h1 className="block text-sm font-medium leading-6 text-sky-500 pb-1">
+              Name
+            </h1>
+            {!inputOpen && (
+              <div className="flex items-center">
+                <span className="flex items-center text-gray-700 text-base font-Roboto pb-1">
+                  {userInfo.name ? userInfo.name : "Unknown"}
+                  <span
+                    className="mx-3 cursor-pointer text-blue-500"
+                    onClick={handleEditName}
+                  >
+                    <MdEdit />
+                  </span>
+                </span>
+              </div>
+            )}
+            {inputOpen && (
+              <div className="flex gap-x-2 items-center mb-4">
+                <input
+                  onChange={handleInputChange}
+                  value={inputValue}
+                  className=" h-8 block max-w-sm rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                <button
+                  onClick={handleButtonClick}
+                  className="flex max-w-md justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Save
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="border-b border-gray-200  pt-5">
+            <h1 className="block text-sm font-medium leading-6 text-sky-500 pb-1">
+              Email address
+            </h1>
+            <span className="block text-gray-700 text-base font-Roboto pb-2">
+              {userInfo.email}
+            </span>
+          </div>
+          <div className="border-b border-gray-200  pt-5">
+            <h1 className="block text-sm font-medium leading-6 text-sky-500 pb-1">
+              Contact
+            </h1>
+            <span className="block text-gray-700 text-base font-Roboto pb-2">
+              {userInfo.addresses?.[0]?.phone}
+            </span>
+          </div>
+
+          {/* Add Address */}
+          <div className="py-6  "></div>
+          <div className=" border-gray-200 py-6">
             <button
               type="submit"
               onClick={(e) => {

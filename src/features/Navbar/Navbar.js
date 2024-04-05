@@ -9,12 +9,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../Cart/cartSlice";
 import { selectUserInfo } from "../user/userSlice";
+import { selectLoggedInUser } from "../auth/authSlice";
 
-const userNavigation = [
-  { name: "My Profile", link: "/profile" },
-  { name: "My Orders", link: "/my-orders" },
-  { name: "Sign out", link: "/logout" },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -25,8 +21,15 @@ function Navbar({ children }) {
   const userInfo = useSelector(selectUserInfo);
   const [activeNavItem, setActiveNavItem] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
+  const user = useSelector(selectLoggedInUser);
 
   // console.log("userinfo ", userInfo.role);
+  const userNavigation = [
+    { name: "My Profile", link: "/profile" },
+    { name: "My Orders", link: "/my-orders" },
+    { name: `${user ? "Sign out" : "Login"}`, link: `${user ? "/logout" : "/login"}` },
+  ];
+  
 
   const navigation = useMemo(
     () => [
@@ -271,18 +274,18 @@ function Navbar({ children }) {
                         />
                       </svg>
                     </div>
-                    <div className="ml-3">
+                    <Link to="/profile" className="ml-3">
                       <div className="text-base font-medium leading-none text-black">
                         {userInfo?.name}
                       </div>
                       <div className="text-sm font-medium leading-none text-gray-800">
                         {userInfo?.email}
                       </div>
-                    </div>
+                    </Link>
                     <Link to="/cart">
                       <button
                         type="button"
-                        className="ml-auto flex-shrink-0 rounded-full p-1 text-black hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        className="ml-5 flex-shrink-0 rounded-full p-1 text-black hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
                         <span className="sr-only">View notifications</span>
                         <ShoppingCartIcon

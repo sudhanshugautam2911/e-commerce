@@ -13,6 +13,7 @@ import { discountPrice } from "../../../app/constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HashLoader from "react-spinners/HashLoader";
+import { selectLoggedInUser, selectUserChecked } from "../../auth/authSlice";
 
 // TODO : In server we will add colors, sizes and highlight to each product
 const colors = [
@@ -42,6 +43,7 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   // console.log("selected color is ", selectedColor);
+  const user = useSelector(selectLoggedInUser);
 
   const dispatch = useDispatch();
   // react routing feature
@@ -53,6 +55,11 @@ export default function ProductDetails() {
 
   const handleCart = (e) => {
     e.preventDefault();
+    console.log("going for it")
+    if (!user) {
+      toast.error("Please Login to add items in cart");
+      return;
+    }
     if (items.findIndex((item) => item.product.id === product.id) < 0) {
       const newItem = {
         product: product.id,
