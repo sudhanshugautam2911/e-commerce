@@ -14,3 +14,4 @@ Simple-Mart is a dynamic **e-commerce web application** designed to deliver a sm
 ---
 
 Feel free to contribute or explore the code! 😊
+Backend code: https://github.com/sudhanshugautam2911/MERN-SimpleMart
